@@ -22,7 +22,7 @@ router.post("/upload-profile-image", upload.single("image"), (req, res) => {
   
   res.json({ 
     imageUrl: imageUrl,
-    filename: cloudinaryId // Send filename for potential cleanup
+    publicId: cloudinaryId // Send filename for potential cleanup
   });
 });
 

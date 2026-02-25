@@ -1,6 +1,5 @@
 const User = require('../models/User');
-const fs = require('fs');
-const path = require('path')
+const deleteImageFile = require('../utils/deleteImageFile');
 
 // @desc    Get all users
 // @route   GET /api/users
@@ -26,22 +25,6 @@ const getUserById = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-// Delete image file
-const deleteImageFile = (imageUrl) => {
-  if (!imageUrl) return;
-  
-  try {
-    const filename = imageUrl.split('/uploads/')[1];
-    if (filename) {
-      const filePath = path.join(__dirname, '..', 'uploads', filename);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-  } catch (error) {
-    console.error('Error deleting image file:', error);
-  }
-};
 
 // @desc Delete a user (Admin only)
 // @route DELETE /api/users/:id
@@ -54,7 +37,7 @@ const deleteUser = async (req, res) => {
     }
     // Delete profile image if exists
     if (user.profileImageUrl) {
-      deleteImageFile(user.profileImageUrl);
+      await deleteImageFile(user.profileImageUrl, user.profileImagePublicId);
     }
 
     await user.deleteOne();

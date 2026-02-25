@@ -37,7 +37,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/com-stations", comStationRoutes);
 app.use("/api/providers", providerRoutes);
-app.use("/api/lab-whiteboard", whiteboardRoutes);
+app.use("/api/whiteboard", whiteboardRoutes);
 app.use("/api/supplies", supplyRoutes);
 app.use("/api/files", fileRoutes);
 

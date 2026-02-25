@@ -25,7 +25,7 @@ const EditProfile = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [pagerNumber, setPagerNumber] = useState('');
   const [selectedColor, setSelectedColor] = useState('#30b5b2');
-  
+  const [explicitlyChoseColor, setExplicitlyChoseColor] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
@@ -43,6 +43,7 @@ const EditProfile = () => {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
     setProfilePic(null);
+    setExplicitlyChoseColor(true);
   };
 
   const handlePhoneChange = (value) => {
@@ -59,6 +60,7 @@ const EditProfile = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    setExplicitlyChoseColor(false);
 
     if (!fullName) {
       setError('Please enter your full name.');
@@ -74,18 +76,22 @@ const EditProfile = () => {
 
     try {
       let profileImageUrl = user.profileImageUrl;
+      let profileImagePublicId = user.profileImagePublicId || null;
 
       if (profilePic) {
         const imgUploadRes = await uploadImage(profilePic);
         profileImageUrl = imgUploadRes.imageUrl || "";
-      } else if (selectedColor !== user.profileColor) {
+        profileImagePublicId = imgUploadRes.publicId || null;
+      } else if (explicitlyChoseColor) {
         profileImageUrl = null;
+        profileImagePublicId = null;
       }
 
       const updateData = {
         name: fullName,
         email,
         profileImageUrl,
+        profileImagePublicId,
         profileColor: profileImageUrl ? null : selectedColor,
         adminInviteToken: adminInviteToken || undefined,
       };

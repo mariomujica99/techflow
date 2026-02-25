@@ -4,7 +4,7 @@ const FileSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     type: { type: String, enum: ['folder', 'file'], required: true },
-    fileType: { type: String }, // 'doc', 'pdf', 'ppt', 'xls', 'image'
+    fileType: { type: String }, // 'pdf', 'image'
     fileUrl: { type: String }, // URL to the uploaded file
     fileName: { type: String }, // Actual filename on server
     size: { type: Number, default: 0 }, // Size in bytes

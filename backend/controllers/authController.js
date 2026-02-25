@@ -1,8 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
+const deleteImageFile = require('../utils/deleteImageFile');
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -119,24 +118,6 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-// Delete image file
-const deleteImageFile = (imageUrl) => {
-  if (!imageUrl) return;
-  
-  try {
-    // Extract filename from URL (e.g., http://localhost:8000/uploads/filename.jpg)
-    const filename = imageUrl.split('/uploads/')[1];
-    if (filename) {
-      const filePath = path.join(__dirname, '..', 'uploads', filename);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-  } catch (error) {
-    console.error('Error deleting image file:', error);
-  }
-};
-
 // @desc    Update user profile
 // @route   PUT /api/auth/profile
 // @access  Private (Requires JWT)
@@ -149,6 +130,7 @@ const updateUserProfile = async (req, res) => {
     }
 
     const oldImageUrl = user.profileImageUrl;
+    const oldPublicId = user.profileImagePublicId;
 
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
@@ -159,13 +141,14 @@ const updateUserProfile = async (req, res) => {
     if (req.body.profileImageUrl !== undefined) {
       // User uploaded a new image - delete old one
       if (req.body.profileImageUrl && oldImageUrl && req.body.profileImageUrl !== oldImageUrl) {
-        deleteImageFile(oldImageUrl);
+        await deleteImageFile(oldImageUrl, oldPublicId);
       }
       // User switched to color - delete old image
       else if (req.body.profileImageUrl === null && oldImageUrl) {
-        deleteImageFile(oldImageUrl);
+        await deleteImageFile(oldImageUrl, oldPublicId);
       }
       user.profileImageUrl = req.body.profileImageUrl;
+      user.profileImagePublicId = req.body.profileImagePublicId || null;
     }
     
     user.profileColor = req.body.profileColor !== undefined ? req.body.profileColor : user.profileColor;
@@ -211,7 +194,7 @@ const deleteUserAccount = async (req, res) => {
 
     // Delete profile image if exists
     if (user.profileImageUrl) {
-      deleteImageFile(user.profileImageUrl);
+      await deleteImageFile(user.profileImageUrl, user.profileImagePublicId);
     }
 
     await user.deleteOne();
