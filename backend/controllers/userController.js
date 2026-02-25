@@ -1,0 +1,67 @@
+const User = require('../models/User');
+const fs = require('fs');
+const path = require('path')
+
+// @desc    Get all users
+// @route   GET /api/users
+// @access  Private
+const getUsers = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $in: ['member', 'admin'] } }).select('-password');
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// @desc    Get user by ID
+// @route   GET /api/users/:id
+// @access  Private
+const getUserById = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select('-password');
+      if (!user) return res.status(404).json({ message: 'User not found' });
+      res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+// Delete image file
+const deleteImageFile = (imageUrl) => {
+  if (!imageUrl) return;
+  
+  try {
+    const filename = imageUrl.split('/uploads/')[1];
+    if (filename) {
+      const filePath = path.join(__dirname, '..', 'uploads', filename);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+  } catch (error) {
+    console.error('Error deleting image file:', error);
+  }
+};
+
+// @desc Delete a user (Admin only)
+// @route DELETE /api/users/:id
+// @access Private (Admin only)
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    // Delete profile image if exists
+    if (user.profileImageUrl) {
+      deleteImageFile(user.profileImageUrl);
+    }
+
+    await user.deleteOne();
+    res.json({ message: "User deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+module.exports = { getUsers, getUserById, deleteUser };

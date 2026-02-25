@@ -1,0 +1,61 @@
+export const BASE_URL = "http://localhost:8000";
+//import.meta.env.VITE_API_BASE_URL || 
+// utils/apiPaths.js
+export const API_PATHS = {
+  AUTH: {
+    REGISTER: "/api/auth/register",                     // Register a new user (Admin or Member)
+    LOGIN: "/api/auth/login",                           // Authenticate user & return JWT token
+    GET_PROFILE: "/api/auth/profile",                   // Get logged-in user details
+  },
+
+  USERS: {
+    GET_ALL_USERS: "/api/users",                        // Get all users
+    GET_USER_BY_ID: (userId) => `/api/users/${userId}`, // Get user by ID
+    CREATE_USER: "/api/users",                          // Create a new user
+    UPDATE_USER: (userId) => `/api/users/${userId}`,    // Update user details
+    DELETE_USER: (userId) => `/api/users/${userId}`,    // Delete a user
+  },
+
+  COM_STATION: {
+    GET_ALL_COM_STATIONS: "/api/com-stations",
+    CREATE_COM_STATION: "/api/com-stations",
+    UPDATE_COM_STATION: (comStationId) => `/api/com-stations/${comStationId}`,
+    DELETE_COM_STATION: (comStationId) => `/api/com-stations/${comStationId}`,
+  },
+
+  PROVIDERS: {
+    GET_ALL_PROVIDERS: "/api/providers",
+    CREATE_PROVIDER: "/api/providers",
+    UPDATE_PROVIDER: (providerId) => `/api/providers/${providerId}`,
+    DELETE_PROVIDER: (providerId) => `/api/providers/${providerId}`,
+  },
+
+  WHITEBOARD: {
+    GET_WHITEBOARD: "/api/whiteboard",
+    UPDATE_WHITEBOARD: "/api/whiteboard",
+  },
+
+  SUPPLIES: {
+    GET_ALL_SUPPLIES: "/api/supplies",
+    UPDATE_SUPPLIES: (department) => `/api/supplies/${department}`,
+  },
+
+  REPORTS: {
+    EXPORT_USERS: "/api/reports/export/users",                // Download users report
+    EXPORT_PROVIDERS: "/api/reports/export/providers",        // Download providers report
+    EXPORT_COM_STATIONS: "/api/reports/export/com-stations",  // Download computer stations report
+    EXPORT_SUPPLIES: "/api/reports/export/supplies",          // Download supplies report
+  },
+
+  FILES: {
+    GET_ALL_FILES: "/api/files",
+    CREATE_FOLDER: "/api/files/folder",
+    UPLOAD_FILE: "/api/files/upload",
+    DELETE_FILE: (fileId) => `/api/files/${fileId}`,
+    DOWNLOAD_FILE: (fileId) => `/api/files/download/${fileId}`,
+  },
+
+  IMAGE: {
+    UPLOAD_IMAGE: "/api/auth/upload-profile-image",
+  },
+}
