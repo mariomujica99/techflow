@@ -12,7 +12,7 @@ import { PiFiles } from "react-icons/pi";
 export const SIDE_MENU_DATA = [
   {
     id: "01",
-    label: "Lab Whiteboard",
+    label: "Whiteboard",
     icon: TbChalkboard,
     path: "/admin/whiteboard",
   },
@@ -63,7 +63,7 @@ export const SIDE_MENU_DATA = [
 export const SIDE_MENU_USER_DATA = [
   {
     id: "01",
-    label: "Lab Whiteboard",
+    label: "Whiteboard",
     icon: TbChalkboard,
     path: "/user/whiteboard",
   },

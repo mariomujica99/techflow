@@ -27,7 +27,7 @@ const PrivateRoute = ({ allowedRoles }) => {
     const hasRequiredRole = allowedRoles.includes(user.role);
     
     if (!hasRequiredRole) {
-      // User doesn't have required role - redirect to the lab whiteboard
+      // User doesn't have required role - redirect to the whiteboard
       return <Navigate to={user.role === "admin" ? "/admin/whiteboard" : "/user/whiteboard"} replace />;
     }
   }

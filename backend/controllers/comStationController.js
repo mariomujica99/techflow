@@ -6,7 +6,7 @@ const ComStation = require('../models/ComStation');
 const getComStations = async (req, res) => {
   try {
     const { type } = req.query;
-    let filter = {};
+    let filter = { departmentId: req.user.departmentId };
 
     if (type && type !== 'All Computer Stations') {
       if (type === 'All Inactive Stations') {
@@ -41,7 +41,7 @@ const createComStation = async (req, res) => {
   try {
     const { comStation, comStationType, comStationLocation, comStationStatus, issueDescription, hasTicket, ticketNumber } = req.body;
 
-    const existingStation = await ComStation.findOne({ comStation });
+    const existingStation = await ComStation.findOne({ comStation, departmentId: req.user.departmentId });
     if (existingStation) {
       return res.status(400).json({ message: 'Computer station already exists' });
     }
@@ -53,7 +53,8 @@ const createComStation = async (req, res) => {
       comStationStatus: comStationStatus || 'Active',
       issueDescription: comStationStatus === 'Inactive' ? issueDescription : '',
       hasTicket: comStationStatus === 'Inactive' ? (hasTicket || false) : false,
-      ticketNumber: comStationStatus === 'Inactive' && hasTicket ? ticketNumber : ''
+      ticketNumber: comStationStatus === 'Inactive' && hasTicket ? ticketNumber : '',
+      departmentId: req.user.departmentId,
     });
 
     res.status(201).json({ message: 'Computer station created successfully', comStation: newComStation });

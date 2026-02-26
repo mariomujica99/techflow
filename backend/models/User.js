@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema(
     role: { type: String, enum: ['admin', 'member'], default: 'member' },
     phoneNumber: { type: String, default: '' },
     pagerNumber: { type: String, default: '' },
+    departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }
 );

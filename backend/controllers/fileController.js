@@ -30,6 +30,7 @@ const uploadFile = async (req, res) => {
       size: req.file.size,
       parentFolder: parentFolder || null,
       uploadedBy: req.user._id,
+      departmentId: req.user.departmentId,
     });
 
     const populatedFile = await File.findById(newFile._id).populate('uploadedBy', 'name');
@@ -141,7 +142,8 @@ const getFiles = async (req, res) => {
     const { folderId } = req.query;
     
     const filter = {
-      parentFolder: folderId || null
+      parentFolder: folderId || null,
+      departmentId: req.user.departmentId,
     };
     
     const files = await File.find(filter)
@@ -181,6 +183,7 @@ const createFolder = async (req, res) => {
       type: 'folder',
       parentFolder: parentFolder || null,
       uploadedBy: req.user._id,
+      departmentId: req.user.departmentId,
     });
 
     const populatedFolder = await File.findById(newFolder._id).populate('uploadedBy', 'name');

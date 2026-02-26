@@ -9,6 +9,7 @@ const comStationSchema = new mongoose.Schema(
     issueDescription: { type: String, default: '' },
     hasTicket: { type: Boolean, default: false },
     ticketNumber: { type: String, default: '' },
+    departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }
 );

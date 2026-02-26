@@ -2,6 +2,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const deleteImageFile = require('../utils/deleteImageFile');
+const Department = require('../models/Department');
 
 // Generate JWT token
 const generateToken = (userId) => {
@@ -21,19 +22,17 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Department Invite Token Check
-    if (!departmentInviteToken || departmentInviteToken !== process.env.DEPARTMENT_INVITE_TOKEN) {
+    // Department Token Check
+    const department = await Department.findOne({ departmentToken: departmentInviteToken });
+    if (!department) {
       return res.status(401).json({ 
         message: 'Invalid Invite Token. Please try again or contact the admin for the code.' 
       });
     }
 
-    // Determine user role: Admin if invite token is provided, otherwise Member
+    // Determine user role
     let role = 'member';
-    if (
-      adminInviteToken &&
-      adminInviteToken === process.env.ADMIN_INVITE_TOKEN
-    ) {
+    if (adminInviteToken && adminInviteToken === department.departmentAdminToken) {
       role = 'admin';
     }
     
@@ -51,7 +50,10 @@ const registerUser = async (req, res) => {
       role,
       phoneNumber: phoneNumber || '',
       pagerNumber: pagerNumber || '',
+      departmentId: department._id,
     });
+
+    await user.populate('departmentId', 'departmentName');
 
     // Return user data with JWT
     res.status(201).json({
@@ -64,6 +66,7 @@ const registerUser = async (req, res) => {
       phoneNumber: user.phoneNumber,
       pagerNumber: user.pagerNumber,
       token: generateToken(user._id),
+      departmentId: user.departmentId,
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -88,6 +91,8 @@ const loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
+    await user.populate('departmentId', 'departmentName');
+
     // Return user data with JWT
     res.json({
       _id: user._id,
@@ -96,6 +101,7 @@ const loginUser = async (req, res) => {
       role: user.role,
       profileImageUrl: user.profileImageUrl,
       profileColor: user.profileColor,
+      departmentId: user.departmentId,
       token: generateToken(user._id),
     });
   } catch (error) {
@@ -108,7 +114,7 @@ const loginUser = async (req, res) => {
 // @access  Private (Requires JWT)
 const getUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id).select('-password');
+    const user = await User.findById(req.user._id).select('-password').populate('departmentId', 'departmentName');
     if (!user) {
       return res.status(404).json({ message: 'User not found'});
     }
@@ -154,8 +160,11 @@ const updateUserProfile = async (req, res) => {
     user.profileColor = req.body.profileColor !== undefined ? req.body.profileColor : user.profileColor;
 
     // Handle admin role upgrade
-    if (req.body.adminInviteToken && req.body.adminInviteToken === process.env.ADMIN_INVITE_TOKEN) {
-      user.role = 'admin';
+    if (req.body.adminInviteToken) {
+      const dept = await Department.findById(user.departmentId);
+      if (dept && req.body.adminInviteToken === dept.departmentAdminToken) {
+        user.role = 'admin';
+      }
     }
 
     if (req.body.password) {
@@ -164,6 +173,8 @@ const updateUserProfile = async (req, res) => {
     }
 
     const updatedUser = await user.save();
+
+    await updatedUser.populate('departmentId', 'departmentName');
 
     res.json({
       _id: updatedUser._id,
@@ -174,6 +185,7 @@ const updateUserProfile = async (req, res) => {
       profileColor: updatedUser.profileColor,
       phoneNumber: updatedUser.phoneNumber,
       pagerNumber: updatedUser.pagerNumber,
+      departmentId: updatedUser.departmentId,
       token: generateToken(updatedUser._id),
     });
   } catch (error) {

@@ -232,15 +232,15 @@ const Whiteboard = () => {
   }, []);
 
   return (
-    <AppLayout activeMenu="Lab Whiteboard">
+    <AppLayout activeMenu="Whiteboard">
       <div className="mt-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mt-4 mb-2">
           <div className="form-card col-span-3">
-            <div className="flex md:flex-row justify-between mb-2">
+            <div className="flex md:flex-row justify-between mb-0.5">
               <div>
-                <h2 className="text-xl md:text-xl text-gray-600 font-bold">Lab Whiteboard</h2>
+                <h2 className="text-xl md:text-xl text-gray-600 font-bold">Whiteboard</h2>
 
-                <h1 className="text-base md:text-lg text-gray-400">Neurophysiology Department</h1>
+                <h1 className="text-base md:text-lg text-gray-400">{user?.departmentId?.departmentName || 'Department'}</h1>
               </div>
               
               <div>
@@ -268,9 +268,7 @@ const Whiteboard = () => {
               </div>
             </div>
 
-            
-
-            <div className="whiteboard-card">
+            <div>
               <p className="text-sm md:text-base text-gray-600 font-medium">
                 {moment().format("dddd Do MMMM YYYY")}
               </p>
@@ -291,343 +289,343 @@ const Whiteboard = () => {
                 )}
               </p>
             </div>
+          </div>
+        </div>
                   
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-5 mt-5">
-              {/* Reading Providers Section */}
-              <div className="whiteboard-card col-span-4">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-base md:text-lg font-medium text-gray-600">Reading Providers</h2>
-                    {isEditMode && (
-                      <button
-                        className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
-                        onClick={handleClearReadingProviders}
-                      >
-                        Clear
-                        <LuEraser className="text-xs"/>
-                      </button>
-                    )}
-                  </div>
-                  <div className="text-sm text-gray-400 space-y-2">
-                    <div className="flex justify-between items-center">
-                      <p>EMU</p>
-                      {isEditMode ? (
-                        <div className="w-32">
-                          <SelectProvider
-                            selectedProviderId={editData.readingProviders.emu}
-                            onProviderSelect={(providerId) => setEditData(prev => ({
-                              ...prev,
-                              readingProviders: { ...prev.readingProviders, emu: providerId }
-                            }))}
-                            placeholder="Select"
-                          />
-                        </div>
-                      ) : (
-                        renderProviderDisplay(whiteboardData?.readingProviders?.emu)
-                      )}
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <p>LTM</p>
-                      {isEditMode ? (
-                        <div className="w-32">
-                          <SelectProvider
-                            selectedProviderId={editData.readingProviders.ltm}
-                            onProviderSelect={(providerId) => setEditData(prev => ({
-                              ...prev,
-                              readingProviders: { ...prev.readingProviders, ltm: providerId }
-                            }))}
-                            placeholder="Select"
-                          />
-                        </div>
-                      ) : (
-                        renderProviderDisplay(whiteboardData?.readingProviders?.ltm)
-                      )}
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <p>ROUTINE</p>
-                      {isEditMode ? (
-                        <div className="w-32">
-                          <SelectProvider
-                            selectedProviderId={editData.readingProviders.routine}
-                            onProviderSelect={(providerId) => setEditData(prev => ({
-                              ...prev,
-                              readingProviders: { ...prev.readingProviders, routine: providerId }
-                            }))}
-                            placeholder="Select"
-                          />
-                        </div>
-                      ) : (
-                        renderProviderDisplay(whiteboardData?.readingProviders?.routine)
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-              {/* Outpatients Section */}
-              <div className="whiteboard-card col-span-4 md:col-span-2">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-base md:text-lg font-medium text-gray-600">Outpatients</h2>
-                    {isEditMode && (
-                      <button
-                        className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
-                        onClick={handleClearOutpatients}
-                      >
-                        Clear
-                        <LuEraser className="text-xs"/>
-                      </button>                      
-                    )}
-                  </div>
-                  <div className="text-sm text-gray-400 space-y-2">
-                    {/* In Edit Mode: Show all three 8am slots */}
-                    {isEditMode && (
-                      <>
-                        {/* NP 8am - Always visible in edit mode */}
-                        <div className="flex justify-between items-center">
-                          <p className="whitespace-nowrap">8 AM | NP</p>
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.np8am}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, np8am: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* First 8am */}
-                        <div className="flex justify-between items-center">
-                          <p className="whitespace-nowrap">8 AM</p>
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.op8am1}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, op8am1: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Second 8am */}
-                        <div className="flex justify-between items-center">
-                          <p className="whitespace-nowrap">8 AM</p>
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.op8am2}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, op8am2: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </>
-                    )}
-
-                    {/* In View Mode: Show only assigned slots, NP first if assigned */}
-                    {!isEditMode && (
-                      <>
-                        {/* NP 8am - Show first if assigned */}
-                        {whiteboardData?.outpatients?.np8am?.length > 0 && (
-                          <div className="flex justify-between items-center">
-                            <p className="whitespace-nowrap">8 AM | NP</p>
-                            {renderUserDisplay(whiteboardData?.outpatients?.np8am)}
-                          </div>
-                        )}
-
-                        {/* First 8am - Show if assigned */}
-                        {whiteboardData?.outpatients?.op8am1?.length > 0 && (
-                          <div className="flex justify-between items-center">
-                            <p className="whitespace-nowrap">8 AM</p>
-                            {renderUserDisplay(whiteboardData?.outpatients?.op8am1)}
-                          </div>
-                        )}
-
-                        {/* Second 8am - Show if assigned */}
-                        {whiteboardData?.outpatients?.op8am2?.length > 0 && (
-                          <div className="flex justify-between items-center">
-                            <p className="whitespace-nowrap">8 AM</p>
-                            {renderUserDisplay(whiteboardData?.outpatients?.op8am2)}
-                          </div>
-                        )}
-                      </>
-                    )}
-
-                    {/* Rest of the slots - visible in both modes if assigned in view mode */}
-                    {(isEditMode || whiteboardData?.outpatients?.op10am?.length > 0) && (
-                      <div className="flex justify-between items-center">
-                        <p className="whitespace-nowrap">10 AM</p>
-                        {isEditMode ? (
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.op10am}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, op10am: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          renderUserDisplay(whiteboardData?.outpatients?.op10am)
-                        )}
-                      </div>
-                    )}
-
-                    {(isEditMode || whiteboardData?.outpatients?.op12pm?.length > 0) && (
-                      <div className="flex justify-between items-center">
-                        <p className="whitespace-nowrap">12 PM</p>
-                        {isEditMode ? (
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.op12pm}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, op12pm: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          renderUserDisplay(whiteboardData?.outpatients?.op12pm)
-                        )}
-                      </div>
-                    )}
-
-                    {(isEditMode || whiteboardData?.outpatients?.op2pm?.length > 0) && (
-                      <div className="flex justify-between items-center">
-                        <p className="whitespace-nowrap">2 PM</p>
-                        {isEditMode ? (
-                          <div className="w-32">
-                            <SelectCoverageUser
-                              selectedUsers={editData.outpatients.op2pm}
-                              setSelectedUsers={(userIds) => {
-                                setEditData(prev => ({
-                                  ...prev,
-                                  outpatients: { ...prev.outpatients, op2pm: userIds }
-                                }));
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          renderUserDisplay(whiteboardData?.outpatients?.op2pm)
-                        )}
-                      </div>
-                    )}
-
-                    {/* Show message if no outpatient slots assigned */}
-                    {!isEditMode && 
-                      ![
-                        whiteboardData?.outpatients?.np8am,
-                        whiteboardData?.outpatients?.op8am1,
-                        whiteboardData?.outpatients?.op8am2,
-                        whiteboardData?.outpatients?.op10am,
-                        whiteboardData?.outpatients?.op12pm,
-                        whiteboardData?.outpatients?.op2pm
-                      ].some(slot => slot && slot.length > 0) && (
-                        <p className="text-sm text-gray-400 mt-2">No outpatients scheduled for today</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            
-
-
-              {/* Coverage Section */}
-              <div className="whiteboard-card col-span-4 md:col-span-2">
-                <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <h2 className="text-base md:text-lg font-medium text-gray-600">Coverage</h2>
-                    {isEditMode && (
-                      <button
-                        className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
-                        onClick={handleClearCoverage}
-                      >
-                        Clear
-                        <LuEraser className="text-xs"/>
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="text-sm text-gray-400 space-y-2">
-                    {[
-                      { label: "ON CALL", key: "onCall" },
-                      { label: "SURG CALL", key: "surgCall" },
-                      { label: "SCANNING", key: "scanning" },
-                      { label: "SURGICAL", key: "surgicals" },
-                      { label: "WADA", key: "wada" },
-                    ].map(({ label, key }) => {
-                      const hasUsers = whiteboardData?.coverage?.[key]?.length > 0;
-
-                      if (!isEditMode && !hasUsers) return null;
-
-                      return (
-                        <div className="flex justify-between items-center" key={key}>
-                          <p className="whitespace-nowrap">{label}</p>
-                          {isEditMode ? (
-                            <div className="w-32">
-                              <SelectCoverageUser
-                                selectedUsers={editData.coverage[key]}
-                                setSelectedUsers={(userIds) =>
-                                  setEditData((prev) => ({
-                                    ...prev,
-                                    coverage: { ...prev.coverage, [key]: userIds },
-                                  }))
-                                }
-                              />
-                            </div>
-                          ) : (
-                            renderUserDisplay(whiteboardData?.coverage?.[key])
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>              
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2 mt-2">
+          {/* Reading Providers Section */}
+          <div className="form-card col-span-3">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-base md:text-lg font-medium text-gray-600">Reading Providers</h2>
+              {isEditMode && (
+                <button
+                  className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
+                  onClick={handleClearReadingProviders}
+                >
+                  Clear
+                  <LuEraser className="text-xs"/>
+                </button>
+              )}
             </div>
 
-            {/* Comments Section */}
-            <div className="whiteboard-card">
-              <div>
-                <h2 className="text-base md:text-lg mb-2 font-medium text-gray-600">Comments</h2>
-                {!isEditMode ? (
-                  <>
-                    {whiteboardData?.comments?.length > 0 ? (
-                      <div className="mt-4">
-                        {whiteboardData.comments.map((comment, index) => (
-                          <Comment key={`comment_${index}`} comment={comment} index={index} />
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="text-sm text-gray-400">No comments for today</p>
-                    )}
-                  </>
+            <div className="text-sm text-gray-400 space-y-2">
+              <div className="flex justify-between items-center">
+                <p>EMU</p>
+                {isEditMode ? (
+                  <div className="w-32">
+                    <SelectProvider
+                      selectedProviderId={editData.readingProviders.emu}
+                      onProviderSelect={(providerId) => setEditData(prev => ({
+                        ...prev,
+                        readingProviders: { ...prev.readingProviders, emu: providerId }
+                      }))}
+                      placeholder="Select"
+                    />
+                  </div>
                 ) : (
-                  <AddCommentsInput
-                    comments={editData.comments}
-                    setComments={(newComments) =>
-                      setEditData((prev) => ({ ...prev, comments: newComments }))
-                    }
-                  />
+                  renderProviderDisplay(whiteboardData?.readingProviders?.emu)
+                )}
+              </div>
+
+              <div className="flex justify-between items-center">
+                <p>LTM</p>
+                {isEditMode ? (
+                  <div className="w-32">
+                    <SelectProvider
+                      selectedProviderId={editData.readingProviders.ltm}
+                      onProviderSelect={(providerId) => setEditData(prev => ({
+                        ...prev,
+                        readingProviders: { ...prev.readingProviders, ltm: providerId }
+                      }))}
+                      placeholder="Select"
+                    />
+                  </div>
+                ) : (
+                  renderProviderDisplay(whiteboardData?.readingProviders?.ltm)
+                )}
+              </div>
+
+              <div className="flex justify-between items-center">
+                <p>ROUTINE</p>
+                {isEditMode ? (
+                  <div className="w-32">
+                    <SelectProvider
+                      selectedProviderId={editData.readingProviders.routine}
+                      onProviderSelect={(providerId) => setEditData(prev => ({
+                        ...prev,
+                        readingProviders: { ...prev.readingProviders, routine: providerId }
+                      }))}
+                      placeholder="Select"
+                    />
+                  </div>
+                ) : (
+                  renderProviderDisplay(whiteboardData?.readingProviders?.routine)
                 )}
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-8 gap-2 mb-2 mt-2">
+          {/* Outpatients Section */}
+          <div className="form-card col-span-1 md:col-span-3">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-base md:text-lg font-medium text-gray-600">Outpatients</h2>
+              {isEditMode && (
+                <button
+                  className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
+                  onClick={handleClearOutpatients}
+                >
+                  Clear
+                  <LuEraser className="text-xs"/>
+                </button>                      
+              )}
+            </div>
+
+            <div className="text-sm text-gray-400 space-y-2">
+              {/* In Edit Mode: Show all three 8am slots */}
+              {isEditMode && (
+                <>
+                  {/* NP 8am - Always visible in edit mode */}
+                  <div className="flex justify-between items-center">
+                    <p className="whitespace-nowrap">8 AM | NP</p>
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.np8am}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, np8am: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* First 8am */}
+                  <div className="flex justify-between items-center">
+                    <p className="whitespace-nowrap">8 AM</p>
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.op8am1}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, op8am1: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Second 8am */}
+                  <div className="flex justify-between items-center">
+                    <p className="whitespace-nowrap">8 AM</p>
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.op8am2}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, op8am2: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* In View Mode: Show only assigned slots, NP first if assigned */}
+              {!isEditMode && (
+                <>
+                  {/* NP 8am - Show first if assigned */}
+                  {whiteboardData?.outpatients?.np8am?.length > 0 && (
+                    <div className="flex justify-between items-center">
+                      <p className="whitespace-nowrap">8 AM | NP</p>
+                      {renderUserDisplay(whiteboardData?.outpatients?.np8am)}
+                    </div>
+                  )}
+
+                  {/* First 8am - Show if assigned */}
+                  {whiteboardData?.outpatients?.op8am1?.length > 0 && (
+                    <div className="flex justify-between items-center">
+                      <p className="whitespace-nowrap">8 AM</p>
+                      {renderUserDisplay(whiteboardData?.outpatients?.op8am1)}
+                    </div>
+                  )}
+
+                  {/* Second 8am - Show if assigned */}
+                  {whiteboardData?.outpatients?.op8am2?.length > 0 && (
+                    <div className="flex justify-between items-center">
+                      <p className="whitespace-nowrap">8 AM</p>
+                      {renderUserDisplay(whiteboardData?.outpatients?.op8am2)}
+                    </div>
+                  )}
+                </>
+              )}
+
+              {/* Rest of the slots - visible in both modes if assigned in view mode */}
+              {(isEditMode || whiteboardData?.outpatients?.op10am?.length > 0) && (
+                <div className="flex justify-between items-center">
+                  <p className="whitespace-nowrap">10 AM</p>
+                  {isEditMode ? (
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.op10am}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, op10am: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    renderUserDisplay(whiteboardData?.outpatients?.op10am)
+                  )}
+                </div>
+              )}
+
+              {(isEditMode || whiteboardData?.outpatients?.op12pm?.length > 0) && (
+                <div className="flex justify-between items-center">
+                  <p className="whitespace-nowrap">12 PM</p>
+                  {isEditMode ? (
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.op12pm}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, op12pm: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    renderUserDisplay(whiteboardData?.outpatients?.op12pm)
+                  )}
+                </div>
+              )}
+
+              {(isEditMode || whiteboardData?.outpatients?.op2pm?.length > 0) && (
+                <div className="flex justify-between items-center">
+                  <p className="whitespace-nowrap">2 PM</p>
+                  {isEditMode ? (
+                    <div className="w-32">
+                      <SelectCoverageUser
+                        selectedUsers={editData.outpatients.op2pm}
+                        setSelectedUsers={(userIds) => {
+                          setEditData(prev => ({
+                            ...prev,
+                            outpatients: { ...prev.outpatients, op2pm: userIds }
+                          }));
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    renderUserDisplay(whiteboardData?.outpatients?.op2pm)
+                  )}
+                </div>
+              )}
+
+              {/* Show message if no outpatient slots assigned */}
+              {!isEditMode && 
+                ![
+                  whiteboardData?.outpatients?.np8am,
+                  whiteboardData?.outpatients?.op8am1,
+                  whiteboardData?.outpatients?.op8am2,
+                  whiteboardData?.outpatients?.op10am,
+                  whiteboardData?.outpatients?.op12pm,
+                  whiteboardData?.outpatients?.op2pm
+                ].some(slot => slot && slot.length > 0) && (
+                  <p className="text-sm text-gray-400 mt-2">No outpatients scheduled for today</p>
+              )}
+            </div>
+          </div>
+
+          {/* Coverage Section */}
+          <div className="form-card col-span-1 md:col-span-3">
+            <div className="flex justify-between items-center mb-2">
+              <h2 className="text-base md:text-lg font-medium text-gray-600">Coverage</h2>
+              {isEditMode && (
+                <button
+                  className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-primary bg-gray-50 hover:bg-blue-50 px-3 py-1 rounded-lg border border-gray-200/50 cursor-pointer"
+                  onClick={handleClearCoverage}
+                >
+                  Clear
+                  <LuEraser className="text-xs"/>
+                </button>
+              )}
+            </div>
+
+            <div className="text-sm text-gray-400 space-y-2">
+              {[
+                { label: "ON CALL", key: "onCall" },
+                { label: "SURG CALL", key: "surgCall" },
+                { label: "SCANNING", key: "scanning" },
+                { label: "SURGICAL", key: "surgicals" },
+                { label: "WADA", key: "wada" },
+              ].map(({ label, key }) => {
+                const hasUsers = whiteboardData?.coverage?.[key]?.length > 0;
+
+                if (!isEditMode && !hasUsers) return null;
+
+                return (
+                  <div className="flex justify-between items-center" key={key}>
+                    <p className="whitespace-nowrap">{label}</p>
+                    {isEditMode ? (
+                      <div className="w-32">
+                        <SelectCoverageUser
+                          selectedUsers={editData.coverage[key]}
+                          setSelectedUsers={(userIds) =>
+                            setEditData((prev) => ({
+                              ...prev,
+                              coverage: { ...prev.coverage, [key]: userIds },
+                            }))
+                          }
+                        />
+                      </div>
+                    ) : (
+                      renderUserDisplay(whiteboardData?.coverage?.[key])
+                    )}
+                  </div>
+                );
+              })}
+              {!isEditMode && 
+                !["onCall", "surgCall", "scanning", "surgicals", "wada"].some(
+                  key => whiteboardData?.coverage?.[key]?.length > 0
+                ) && (
+                  <p className="text-sm text-gray-400 mt-2">Add technologist coverage for the day</p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2 mt-2">
+          {/* Comments Section */}
+          <div className="form-card col-span-3">
+            <h2 className="text-base md:text-lg mb-2 font-medium text-gray-600">Comments</h2>
+            {!isEditMode ? (
+              <>
+                {whiteboardData?.comments?.length > 0 ? (
+                  <div className="mt-4">
+                    {whiteboardData.comments.map((comment, index) => (
+                      <Comment key={`comment_${index}`} comment={comment} index={index} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-gray-400">No comments for today</p>
+                )}
+              </>
+            ) : (
+              <AddCommentsInput
+                comments={editData.comments}
+                setComments={(newComments) =>
+                  setEditData((prev) => ({ ...prev, comments: newComments }))
+                }
+              />
+            )}
           </div>
         </div>
       </div>

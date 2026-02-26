@@ -81,7 +81,7 @@ const ManageUsers = () => {
               </div>
             </div>
             <h1 className="text-base md:text-lg text-gray-400 mt-1">
-              Neurophysiology Department
+              {user?.departmentId?.departmentName || 'Department'}
             </h1>
           </div>
 

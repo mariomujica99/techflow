@@ -5,7 +5,7 @@ const Provider = require('../models/Provider');
 // @access  Private
 const getProviders = async (req, res) => {
   try {
-    const providers = await Provider.find().sort({ name: 1 });
+    const providers = await Provider.find({ departmentId: req.user.departmentId }).sort({ name: 1 });
     res.json(providers);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -32,7 +32,7 @@ const createProvider = async (req, res) => {
   try {
     const { name, profileColor, email, phoneNumber, pagerNumber } = req.body;
 
-    const existingProvider = await Provider.findOne({ name });
+    const existingProvider = await Provider.findOne({ name, departmentId: req.user.departmentId });
     if (existingProvider) {
       return res.status(400).json({ message: 'Provider already exists' });
     }
@@ -43,6 +43,7 @@ const createProvider = async (req, res) => {
       email: email || '',
       phoneNumber: phoneNumber || '',
       pagerNumber: pagerNumber || '',
+      departmentId: req.user.departmentId,
     });
 
     res.status(201).json({ message: 'Provider created successfully', provider: newProvider });

@@ -5,7 +5,7 @@ const Supply = require('../models/Supply');
 // @access  Private
 const getSupplies = async (req, res) => {
   try {
-    const supplies = await Supply.find().populate('lastUpdatedBy', 'name');
+    const supplies = await Supply.find({ departmentId: req.user.departmentId }).populate('lastUpdatedBy', 'name');
     res.json(supplies);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -20,13 +20,14 @@ const updateSupplies = async (req, res) => {
     const { storageRoom } = req.params;
     const { items } = req.body;
 
-    let supply = await Supply.findOne({ storageRoom });
+    let supply = await Supply.findOne({ storageRoom, departmentId: req.user.departmentId });
 
     if (!supply) {
       supply = await Supply.create({
         storageRoom,
         items,
         lastUpdatedBy: req.user._id,
+        departmentId: req.user.departmentId,
       });
     } else {
       supply.items = items;

@@ -9,7 +9,7 @@ const excelJS = require('exceljs');
 // @access Private (Admin)
 const exportUsersReport = async (req, res) => {
   try {
-    const users = await User.find().select('name email phoneNumber pagerNumber').lean();
+    const users = await User.find({ departmentId: req.user.departmentId }).select('name email phoneNumber pagerNumber').lean();
     
     // Sort alphabetically by name
     users.sort((a, b) => a.name.localeCompare(b.name));
@@ -68,7 +68,7 @@ const exportUsersReport = async (req, res) => {
 // @access Private (Admin)
 const exportProvidersReport = async (req, res) => {
   try {
-    const providers = await Provider.find().select('name email phoneNumber pagerNumber').lean();
+    const providers = await Provider.find({ departmentId: req.user.departmentId }).select('name email phoneNumber pagerNumber').lean();
     
     // Sort alphabetically by name
     providers.sort((a, b) => a.name.localeCompare(b.name));
@@ -127,7 +127,7 @@ const exportProvidersReport = async (req, res) => {
 // @access  Private (Admin)
 const exportComStationsReport = async (req, res) => {
   try {
-    const comStations = await ComStation.find().sort({ comStation: 1 });
+    const comStations = await ComStation.find({ departmentId: req.user.departmentId }).sort({ comStation: 1 });
 
     const workbook = new excelJS.Workbook();
     const worksheet = workbook.addWorksheet('Computer Stations Report');
@@ -183,7 +183,7 @@ const exportComStationsReport = async (req, res) => {
 // @access  Private (Admin)
 const exportSuppliesReport = async (req, res) => {
   try {
-    const supplies = await Supply.find().sort({ storageRoom: 1 });
+    const supplies = await Supply.find({ departmentId: req.user.departmentId }).sort({ storageRoom: 1 });
 
     // Organize by storage room
     const storageRoomMap = {};

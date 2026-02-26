@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 import AppLayout from "../../components/layouts/AppLayout"
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -9,6 +11,7 @@ import { displayPhoneNumber } from "../../utils/phoneFormatter";
 
 const ViewUsers = () => {
   const [allUsers, setAllUsers] = useState([]);
+  const { user } = useContext(UserContext);
 
   const getAllUsersAlphabetically = async () => {
     try {
@@ -44,7 +47,7 @@ const ViewUsers = () => {
         </div>
 
         <h1 className="text-base md:text-lg text-gray-400 mt-1 mb-2">
-          Neurophysiology Department
+          {user?.departmentId?.departmentName || 'Department'}
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">

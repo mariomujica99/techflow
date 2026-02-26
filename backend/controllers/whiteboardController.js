@@ -5,7 +5,7 @@ const Whiteboard = require('../models/Whiteboard');
 // @access  Private
 const getWhiteboard = async (req, res) => {
   try {
-    let whiteboard = await Whiteboard.findOne()
+    let whiteboard = await Whiteboard.findOne({ departmentId: req.user.departmentId })
       .populate('coverage.onCall', 'name profileImageUrl profileColor')
       .populate('coverage.surgCall', 'name profileImageUrl profileColor')
       .populate('coverage.scanning', 'name profileImageUrl profileColor')
@@ -32,6 +32,7 @@ const getWhiteboard = async (req, res) => {
         readingProviders: {},
         lastUpdatedBy: req.user._id,
         comments: [],
+        departmentId: req.user.departmentId,
       });
       
       whiteboard = await Whiteboard.findById(whiteboard._id)
@@ -51,7 +52,7 @@ const updateWhiteboard = async (req, res) => {
   try {
     const { coverage, outpatients, readingProviders } = req.body;
 
-    let whiteboard = await Whiteboard.findOne();
+    let whiteboard = await Whiteboard.findOne({ departmentId: req.user.departmentId });
 
     if (!whiteboard) {
       // Create a new whiteboard if none exists
@@ -74,6 +75,7 @@ const updateWhiteboard = async (req, res) => {
         readingProviders: readingProviders || {},
         lastUpdatedBy: req.user._id,
         comments: req.body.comments || [],
+        departmentId: req.user.departmentId,
       });
     } else {
       // Update coverage arrays if provided

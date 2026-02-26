@@ -179,13 +179,13 @@ const Supplies = () => {
   return (
     <AppLayout activeMenu="Needed Supplies">
       <div className="mt-5">
-        <div className="grid grid-cols-1 md:grid-cols-4 mt-4 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 mt-4 mb-2">
           <div className="form-card col-span-3">
             <div className="flex md:flex-row  justify-between mb-2">
               <div>
                 <h2 className="text-xl md:text-xl text-gray-600 font-bold">Needed Supplies</h2>
 
-                <h1 className="text-base md:text-lg text-gray-400">Neurophysiology Department</h1>
+                <h1 className="text-base md:text-lg text-gray-400">{user?.departmentId?.departmentName || 'Department'}</h1>
               </div>
 
               <div>
@@ -219,7 +219,7 @@ const Supplies = () => {
               </div>
             )}
 
-            <div className="whiteboard-card">
+            <div>
               <p className="text-sm md:text-base text-gray-600 font-medium">
                 {moment().format("dddd Do MMMM YYYY")}
               </p>
@@ -240,22 +240,22 @@ const Supplies = () => {
                 )}
               </p>
             </div>
-
-            <div className="grid grid-cols-1 gap-5 mb-5 mt-5">
-              {STORAGE_ROOMS.map((storageRoom) => (
-                <StorageRoomSection
-                  key={storageRoom}
-                  title={storageRoom}
-                  items={suppliesData[storageRoom]?.items || []}
-                  isEditMode={isEditMode}
-                  onAddClick={() => handleOpenModal(storageRoom)}
-                  onDeleteItem={(item) => handleDeleteItem(storageRoom, item)}
-                  onCheckItem={(item) => handleCheckItem(storageRoom, item)}
-                  onCheckAll={() => handleCheckAll(storageRoom)}
-                />
-              ))}
-            </div>
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-4">
+          {STORAGE_ROOMS.map((storageRoom) => (
+            <StorageRoomSection
+              key={storageRoom}
+              title={storageRoom}
+              items={suppliesData[storageRoom]?.items || []}
+              isEditMode={isEditMode}
+              onAddClick={() => handleOpenModal(storageRoom)}
+              onDeleteItem={(item) => handleDeleteItem(storageRoom, item)}
+              onCheckItem={(item) => handleCheckItem(storageRoom, item)}
+              onCheckAll={() => handleCheckAll(storageRoom)}
+            />
+          ))}
         </div>
       </div>
 
@@ -286,7 +286,7 @@ const StorageRoomSection = ({
   onCheckAll,
 }) => {
   return (
-    <div className="whiteboard-card">
+    <div className="form-card col-span-3">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-base md:text-lg font-medium text-gray-600">
           {title}

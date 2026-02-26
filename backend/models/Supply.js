@@ -9,6 +9,7 @@ const supplySchema = new mongoose.Schema(
     },
     items: [{ type: String }],
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }
 );

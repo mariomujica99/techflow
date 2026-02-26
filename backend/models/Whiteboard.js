@@ -24,6 +24,7 @@ const whiteboardSchema = new mongoose.Schema(
     },
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     comments: [{ type: String }], // Text comments
+    departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }
 );

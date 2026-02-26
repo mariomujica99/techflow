@@ -10,6 +10,7 @@ const FileSchema = new mongoose.Schema(
     size: { type: Number, default: 0 }, // Size in bytes
     parentFolder: { type: mongoose.Schema.Types.ObjectId, ref: 'File', default: null },
     uploadedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }
 );
