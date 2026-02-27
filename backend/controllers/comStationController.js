@@ -27,7 +27,7 @@ const getComStations = async (req, res) => {
       }
     }
 
-    const comStations = await ComStation.find(filter).sort({ createdAt: -1 });
+    const comStations = await ComStation.find(filter).collation({ locale: 'en', numericOrdering: true }).sort({ comStation: 1 });
     res.json(comStations);
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

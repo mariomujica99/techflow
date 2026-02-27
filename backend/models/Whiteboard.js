@@ -21,9 +21,13 @@ const whiteboardSchema = new mongoose.Schema(
       emu: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', default: null },
       ltm: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', default: null },
       routine: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', default: null },
+      routineAM: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', default: null },
+      routinePM: { type: mongoose.Schema.Types.ObjectId, ref: 'Provider', default: null },
     },
     lastUpdatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    comments: [{ type: String }], // Text comments
+    comments: [{ type: String }],
+    birthdays: [{ type: String }],
+    anniversaries: [{ type: String }],
     departmentId: { type: mongoose.Schema.Types.ObjectId, ref: 'Department', required: true },
   },
   { timestamps: true }

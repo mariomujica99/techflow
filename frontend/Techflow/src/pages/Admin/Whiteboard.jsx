@@ -9,18 +9,25 @@ import SelectProvider from "../../components/Inputs/SelectProvider";
 import { getInitials } from "../../utils/getInitials";
 import toast from "react-hot-toast";
 import AddCommentsInput from "../../components/Inputs/AddCommentsInput";
+import AddBirthdaysInput from "../../components/Inputs/AddBirthdaysInput";
+import AddAnniversariesInput from "../../components/Inputs/AddAnniversariesInput";
 import Modal from "../../components/Modal";
 import { CiSaveDown1 } from "react-icons/ci";
 import { LuEraser } from "react-icons/lu";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { LiaBirthdayCakeSolid } from "react-icons/lia";
+import { GiBalloons } from "react-icons/gi";
+import { BsEmojiSmile } from "react-icons/bs";
+import { IoStarSharp } from "react-icons/io5";
 
 const Whiteboard = () => {
   const { user } = useContext(UserContext);
   const [whiteboardData, setWhiteboardData] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [show8AMValidationModal, setShow8AMValidationModal] = useState(false);
+  const [showRoutineConflictModal, setShowRoutineConflictModal] = useState(false);
 
   const [editData, setEditData] = useState({
     coverage: {
@@ -42,8 +49,12 @@ const Whiteboard = () => {
       emu: null,
       ltm: null,
       routine: null,
+      routineAM: null,
+      routinePM: null,      
     },
     comments: [],
+    birthdays: [],
+    anniversaries: [],    
   });
 
   const getWhiteboardData = async () => {
@@ -71,8 +82,12 @@ const Whiteboard = () => {
           emu: response.data?.readingProviders?.emu?._id || null,
           ltm: response.data?.readingProviders?.ltm?._id || null,
           routine: response.data?.readingProviders?.routine?._id || null,
+          routineAM: response.data?.readingProviders?.routineAM?._id || null,
+          routinePM: response.data?.readingProviders?.routinePM?._id || null,          
         },
         comments: response.data?.comments || [],
+        birthdays: response.data?.birthdays || [],
+        anniversaries: response.data?.anniversaries || [],        
       });
     } catch (error) {
       console.error("Error fetching whiteboard data:", error);
@@ -88,26 +103,40 @@ const Whiteboard = () => {
     }
   };
 
-  const validateOutpatientSlots = () => {
-    const { np8am, op8am1, op8am2 } = editData.outpatients;
-    
-    // Count how many 8am slots have users assigned
-    let assignedCount = 0;
-    if (np8am && np8am.length > 0) assignedCount++;
-    if (op8am1 && op8am1.length > 0) assignedCount++;
-    if (op8am2 && op8am2.length > 0) assignedCount++;
-    
-    // If more than 2 slots are assigned, return false
-    return assignedCount <= 2;
+  const handle8AMSelection = (slot, userIds) => {
+    setEditData(prev => {
+      const updated = { ...prev.outpatients, [slot]: userIds };
+      const assignedCount = ['np8am', 'op8am1', 'op8am2'].filter(
+        key => (updated[key]?.length > 0)
+      ).length;
+      if (assignedCount > 2) {
+        setShow8AMValidationModal(true);
+        return prev; // reject the change
+      }
+      return { ...prev, outpatients: updated };
+    });
   };
 
-  const handleSaveChanges = async () => {
-    // Validate before saving
-    if (!validateOutpatientSlots()) {
-      setShowValidationModal(true);
-      return;
-    }
-    
+  const handleRoutineSelection = (slot, providerId) => {
+    setEditData(prev => {
+      const rp = prev.readingProviders;
+      if (slot === 'routine' && providerId) {
+        if (rp.routineAM || rp.routinePM) {
+          setShowRoutineConflictModal(true);
+          return prev;
+        }
+      }
+      if ((slot === 'routineAM' || slot === 'routinePM') && providerId) {
+        if (rp.routine) {
+          setShowRoutineConflictModal(true);
+          return prev;
+        }
+      }
+      return { ...prev, readingProviders: { ...rp, [slot]: providerId } };
+    });
+  };
+
+  const handleSaveChanges = async () => {    
     setLoading(true);
     try {
       const updatePayload = {
@@ -115,6 +144,8 @@ const Whiteboard = () => {
         outpatients: editData.outpatients,
         readingProviders: editData.readingProviders,
         comments: editData.comments,
+        birthdays: editData.birthdays,
+        anniversaries: editData.anniversaries,
       };
 
       await axiosInstance.put(API_PATHS.WHITEBOARD.UPDATE_WHITEBOARD, updatePayload);
@@ -145,6 +176,8 @@ const Whiteboard = () => {
         emu: null,
         ltm: null,
         routine: null,
+        routineAM: null,
+        routinePM: null,        
       }
     }));
   };
@@ -208,6 +241,51 @@ const Whiteboard = () => {
     );
   };
 
+  const renderRoutineDisplay = () => {
+    const { routine, routineAM, routinePM } = whiteboardData?.readingProviders || {};
+
+    if (!routine && !routineAM && !routinePM) {
+      return <span className="text-gray-400">—</span>;
+    }
+
+    if (routine) {
+      return renderProviderDisplay(routine);
+    }
+
+    if (routineAM && routinePM) {
+      return (
+        <div className="flex flex-col items-end gap-1">
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400 text-xs">AM</span>
+            {renderProviderDisplay(routineAM)}
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-gray-400 text-xs">PM</span>
+            {renderProviderDisplay(routinePM)}
+          </div>
+        </div>
+      );
+    }
+
+    if (routineAM) {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="text-gray-400 text-xs">AM</span>
+          {renderProviderDisplay(routineAM)}
+        </div>
+      );
+    }
+
+    if (routinePM) {
+      return (
+        <div className="flex items-center gap-2">
+          <span className="text-gray-400 text-xs">PM</span>
+          {renderProviderDisplay(routinePM)}
+        </div>
+      );
+    }
+  };
+  
   const renderProviderDisplay = (providerData) => {
     if (!providerData) return <span className="text-gray-400">—</span>;
     
@@ -345,23 +423,45 @@ const Whiteboard = () => {
                 )}
               </div>
 
-              <div className="flex justify-between items-center">
-                <p>ROUTINE</p>
-                {isEditMode ? (
-                  <div className="w-32">
-                    <SelectProvider
-                      selectedProviderId={editData.readingProviders.routine}
-                      onProviderSelect={(providerId) => setEditData(prev => ({
-                        ...prev,
-                        readingProviders: { ...prev.readingProviders, routine: providerId }
-                      }))}
-                      placeholder="Select"
-                    />
+              {isEditMode ? (
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <p>ROUTINE | All Day</p>
+                    <div className="w-32">
+                      <SelectProvider
+                        selectedProviderId={editData.readingProviders.routine}
+                        onProviderSelect={(providerId) => handleRoutineSelection('routine', providerId)}
+                        placeholder="Select"
+                      />
+                    </div>
                   </div>
-                ) : (
-                  renderProviderDisplay(whiteboardData?.readingProviders?.routine)
-                )}
-              </div>
+                  <div className="flex justify-between items-center">
+                    <p>ROUTINE | AM</p>
+                    <div className="w-32">
+                      <SelectProvider
+                        selectedProviderId={editData.readingProviders.routineAM}
+                        onProviderSelect={(providerId) => handleRoutineSelection('routineAM', providerId)}
+                        placeholder="Select"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <p>ROUTINE | PM</p>
+                    <div className="w-32">
+                      <SelectProvider
+                        selectedProviderId={editData.readingProviders.routinePM}
+                        onProviderSelect={(providerId) => handleRoutineSelection('routinePM', providerId)}
+                        placeholder="Select"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex justify-between items-center">
+                  <p>ROUTINE</p>
+                  {renderRoutineDisplay()}
+                </div>
+              )}              
             </div>
           </div>
         </div>
@@ -392,12 +492,7 @@ const Whiteboard = () => {
                     <div className="w-32">
                       <SelectCoverageUser
                         selectedUsers={editData.outpatients.np8am}
-                        setSelectedUsers={(userIds) => {
-                          setEditData(prev => ({
-                            ...prev,
-                            outpatients: { ...prev.outpatients, np8am: userIds }
-                          }));
-                        }}
+                        setSelectedUsers={(userIds) => handle8AMSelection('np8am', userIds)}
                       />
                     </div>
                   </div>
@@ -408,12 +503,7 @@ const Whiteboard = () => {
                     <div className="w-32">
                       <SelectCoverageUser
                         selectedUsers={editData.outpatients.op8am1}
-                        setSelectedUsers={(userIds) => {
-                          setEditData(prev => ({
-                            ...prev,
-                            outpatients: { ...prev.outpatients, op8am1: userIds }
-                          }));
-                        }}
+                        setSelectedUsers={(userIds) => handle8AMSelection('op8am1', userIds)}
                       />
                     </div>
                   </div>
@@ -424,12 +514,7 @@ const Whiteboard = () => {
                     <div className="w-32">
                       <SelectCoverageUser
                         selectedUsers={editData.outpatients.op8am2}
-                        setSelectedUsers={(userIds) => {
-                          setEditData(prev => ({
-                            ...prev,
-                            outpatients: { ...prev.outpatients, op8am2: userIds }
-                          }));
-                        }}
+                        setSelectedUsers={(userIds) => handle8AMSelection('op8am2', userIds)}
                       />
                     </div>
                   </div>
@@ -628,27 +713,105 @@ const Whiteboard = () => {
             )}
           </div>
         </div>
+
+        {(isEditMode || (whiteboardData?.birthdays?.length > 0)) && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2 mt-2">
+            <div className="form-card col-span-3">
+              <h2 className="flex items-start gap-2 text-base md:text-lg mb-2 font-medium text-gray-600">
+                <GiBalloons className="text-base md:text-lg font-medium text-rose-400 flex-shrink-0 mt-1" />
+                Birthdays
+                <GiBalloons className="text-base md:text-lg font-medium text-blue-400 flex-shrink-0 mt-1" />
+              </h2>
+              {!isEditMode ? (
+                <div className="mt-1">
+                  {whiteboardData.birthdays.map((entry, index) => (
+                    <div key={index} className="flex items-start gap-2 mb-2 font-medium">
+                      <LiaBirthdayCakeSolid className="text-lg text-orange-400 flex-shrink-0" />
+                      <p className="text-sm md:base text-gray-600 flex-1">{entry}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <AddBirthdaysInput
+                  birthdays={editData.birthdays}
+                  setBirthdays={(newBirthdays) =>
+                    setEditData((prev) => ({ ...prev, birthdays: newBirthdays }))
+                  }
+                />
+              )}
+            </div>
+          </div>
+        )}
+
+        {(isEditMode || (whiteboardData?.anniversaries?.length > 0)) && (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-2 mb-2 mt-2">
+            <div className="form-card col-span-3">
+              <h2 className="flex items-start gap-2 text-base md:text-lg mb-2 font-medium text-gray-600">
+                <IoStarSharp className="text-base md:text-lg font-medium text-amber-400 flex-shrink-0 mt-1" />
+                Anniversaries
+                <IoStarSharp className="text-base md:text-lg font-medium text-amber-400 flex-shrink-0 mt-1" />
+              </h2>
+              {!isEditMode ? (
+                <div className="mt-1">
+                  {whiteboardData.anniversaries.map((entry, index) => (
+                    <div key={index} className="flex items-start gap-2 mb-2 font-medium">
+                      <BsEmojiSmile className="text-lg text-amber-400 flex-shrink-0 mt-0.25" />
+                      <p className="text-sm md:base text-gray-600 flex-1">{entry}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <AddAnniversariesInput
+                  anniversaries={editData.anniversaries}
+                  setAnniversaries={(newAnniversaries) =>
+                    setEditData((prev) => ({ ...prev, anniversaries: newAnniversaries }))
+                  }
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <Modal
-        isOpen={showValidationModal}
-        onClose={() => setShowValidationModal(false)}
+        isOpen={show8AMValidationModal}
+        onClose={() => setShow8AMValidationModal(false)}
         title="8 AM Slot Limit Reached"
       >
         <div>
           <p className="text-sm dark:text-white mb-4">
-            Cannot select more than two 8 AM slots. Please clear users from one of the 8 AM slots, then try again.
+            Cannot select more than two 8 AM slots. Please clear users from one of the 8 AM slots first.
           </p>
           <div className="flex justify-end">
-            <button 
-              className="card-btn" 
-              onClick={() => setShowValidationModal(false)}
+            <button
+              className="card-btn"
+              onClick={() => setShow8AMValidationModal(false)}
             >
               OK
             </button>
           </div>
         </div>
-      </Modal>      
+      </Modal>
+
+      <Modal
+        isOpen={showRoutineConflictModal}
+        onClose={() => setShowRoutineConflictModal(false)}
+        title="Routine Slot Conflict"
+      >
+        <div>
+          <p className="text-sm dark:text-white mb-4">
+            Cannot select All Day when AM or PM is already assigned, and vice versa. Please clear the conflicting slot first.
+          </p>
+          <div className="flex justify-end">
+            <button
+              className="card-btn"
+              onClick={() => setShowRoutineConflictModal(false)}
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </Modal>
     </AppLayout>
   );
 };

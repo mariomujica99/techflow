@@ -20,6 +20,8 @@ const getWhiteboard = async (req, res) => {
       .populate('readingProviders.emu', 'name profileColor')
       .populate('readingProviders.ltm', 'name profileColor')
       .populate('readingProviders.routine', 'name profileColor')
+      .populate('readingProviders.routineAM', 'name profileColor')
+      .populate('readingProviders.routinePM', 'name profileColor')      
       .populate('lastUpdatedBy', 'name');
 
     // If no whiteboard exists, create a default one with np8am
@@ -75,6 +77,8 @@ const updateWhiteboard = async (req, res) => {
         readingProviders: readingProviders || {},
         lastUpdatedBy: req.user._id,
         comments: req.body.comments || [],
+        birthdays: req.body.birthdays || [],
+        anniversaries: req.body.anniversaries || [],        
         departmentId: req.user.departmentId,
       });
     } else {
@@ -106,6 +110,8 @@ const updateWhiteboard = async (req, res) => {
 
       whiteboard.lastUpdatedBy = req.user._id;
       whiteboard.comments = req.body.comments || whiteboard.comments;
+      whiteboard.birthdays = req.body.birthdays || whiteboard.birthdays;
+      whiteboard.anniversaries = req.body.anniversaries || whiteboard.anniversaries;
 
       await whiteboard.save();
     }
@@ -126,6 +132,8 @@ const updateWhiteboard = async (req, res) => {
       .populate('readingProviders.emu', 'name profileColor')
       .populate('readingProviders.ltm', 'name profileColor')
       .populate('readingProviders.routine', 'name profileColor')
+      .populate('readingProviders.routineAM', 'name profileColor')
+      .populate('readingProviders.routinePM', 'name profileColor')      
       .populate('lastUpdatedBy', 'name');
 
     res.json({ message: 'Whiteboard updated successfully', whiteboard: updatedWhiteboard });

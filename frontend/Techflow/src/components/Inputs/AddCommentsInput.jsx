@@ -27,8 +27,8 @@ const AddCommentsInput = ({ comments, setComments }) => {
           className="flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2"
         >
           <div className="flex flex-1 mr-3">
-            <LuMessageSquareText className="text-gray-400 flex-shrink-0 mr-2 mt-0.5" />
-            <p className="text-xs text-black flex-1">{item}</p>
+            <LuMessageSquareText className="text-gray-400 flex-shrink-0 mr-2 mt-0.25" />
+            <p className="text-xs text-black flex-1 mt-0.25">{item}</p>
           </div>
 
           <button
@@ -38,7 +38,7 @@ const AddCommentsInput = ({ comments, setComments }) => {
               setComments(updatedArr);
             }}
           >
-            <HiOutlineTrash className="text-lg text-red-500" />
+            <HiOutlineTrash className="text-lg text-red-500 hover:text-rose-600" />
           </button>
         </div>
       ))}
