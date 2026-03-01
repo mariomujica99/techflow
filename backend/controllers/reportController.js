@@ -68,7 +68,7 @@ const exportUsersReport = async (req, res) => {
 // @access Private (Admin)
 const exportProvidersReport = async (req, res) => {
   try {
-    const providers = await Provider.find({ departmentId: req.user.departmentId }).select('name email phoneNumber pagerNumber').lean();
+    const providers = await Provider.find({ departmentId: req.user.departmentId }).select('name email phoneNumber pagerNumber officeNumber').lean();
     
     // Sort alphabetically by name
     providers.sort((a, b) => a.name.localeCompare(b.name));
@@ -81,6 +81,7 @@ const exportProvidersReport = async (req, res) => {
       { header: 'Email', key: 'email', width: 40 },
       { header: 'Phone', key: 'phoneNumber', width: 20 },
       { header: 'Pager', key: 'pagerNumber', width: 20 },
+      { header: 'Office', key: 'officeNumber', width: 20 },
     ];
     
     providers.forEach((provider) => {
@@ -89,6 +90,7 @@ const exportProvidersReport = async (req, res) => {
         email: provider.email || 'N/A',
         phoneNumber: provider.phoneNumber || 'N/A',
         pagerNumber: provider.pagerNumber || 'N/A',
+        officeNumber: provider.officeNumber || 'N/A',
       });
     });
     
@@ -137,6 +139,7 @@ const exportComStationsReport = async (req, res) => {
       { header: 'Location', key: 'comStationLocation', width: 15 },
       { header: 'Type', key: 'comStationType', width: 15 },
       { header: 'Status', key: 'comStationStatus', width: 15 },
+      { header: 'Condition', key: 'comStationCondition', width: 15 },
       { header: 'Issue', key: 'issueDescription', width: 30 },
       { header: 'Ticket?', key: 'hasTicket', width: 10 },
       { header: 'Ticket Number', key: 'ticketNumber', width: 20 },
@@ -148,6 +151,7 @@ const exportComStationsReport = async (req, res) => {
         comStationLocation: station.comStationLocation,
         comStationType: station.comStationType,
         comStationStatus: station.comStationStatus,
+        comStationCondition: station.comStationCondition || 'Normal',
         issueDescription: station.issueDescription || 'N/A',
         hasTicket: station.hasTicket ? 'Yes' : 'No',
         ticketNumber: station.ticketNumber || 'N/A',

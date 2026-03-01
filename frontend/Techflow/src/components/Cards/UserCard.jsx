@@ -26,8 +26,8 @@ const UserCard = ({ userInfo, onUserDeleted, showAdminBadge = false, isDemoAccou
   };
 
 return (
-  <div className="relative flex items-center bg-white p-4 rounded-xl shadow-md shadow-gray-100 border border-gray-200/50">
-    <div className="flex items-center gap-3 min-w-0 w-full pr-10">
+  <div className="flex items-center bg-white p-4 rounded-xl shadow-md shadow-gray-100 border border-gray-200/50">
+    <div className="flex items-center gap-3 min-w-0 w-full">
       {userInfo?.profileImageUrl ? (
         <img
           src={userInfo.profileImageUrl}
@@ -65,20 +65,22 @@ return (
       </div>
     </div>
 
-    {showAdminBadge && userInfo?.role === 'admin' && (
-      <span className="absolute bottom-4 right-4 text-xs bg-primary text-white px-2 py-0.5 rounded-full">
-        Admin
-      </span>
-    )}
-
     {showAdminBadge && (
-      <button
-        className="absolute top-4 right-4 flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded-full px-2 py-2 border border-rose-100 hover:border-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={() => setOpenDeleteAlert(true)}
-        disabled={isDemoAccount}
-      >
-        <LuTrash2 className="text-base" />
-      </button>
+      <div className="flex flex-col justify-between items-end self-stretch flex-shrink-0">
+        <button
+          className="flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded-full p-1.5 border border-rose-100 hover:border-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+          onClick={() => setOpenDeleteAlert(true)}
+          disabled={isDemoAccount}
+        >
+          <LuTrash2 className="text-base" />
+        </button>
+
+        {userInfo?.role === 'admin' && (
+          <span className="text-xs bg-primary text-white px-2 py-0.5 rounded-full">
+            Admin
+          </span>
+        )}
+      </div>
     )}
 
     <Modal

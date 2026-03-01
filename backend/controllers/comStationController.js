@@ -24,6 +24,8 @@ const getComStations = async (req, res) => {
       } else if (type === 'EEG Cart - Bellevue') {
         filter.comStationType = 'EEG Cart';
         filter.comStationLocation = 'Bellevue';
+      } else if (type === 'All Stations With Issues') {
+        filter.comStationCondition = 'Issue';
       }
     }
 
@@ -39,7 +41,7 @@ const getComStations = async (req, res) => {
 // @access  Private
 const createComStation = async (req, res) => {
   try {
-    const { comStation, comStationType, comStationLocation, comStationStatus, issueDescription, hasTicket, ticketNumber } = req.body;
+    const { comStation, comStationType, comStationLocation, comStationStatus, comStationCondition, issueDescription, hasTicket, ticketNumber } = req.body;
 
     const existingStation = await ComStation.findOne({ comStation, departmentId: req.user.departmentId });
     if (existingStation) {
@@ -51,9 +53,10 @@ const createComStation = async (req, res) => {
       comStationType,
       comStationLocation,
       comStationStatus: comStationStatus || 'Active',
-      issueDescription: comStationStatus === 'Inactive' ? issueDescription : '',
-      hasTicket: comStationStatus === 'Inactive' ? (hasTicket || false) : false,
-      ticketNumber: comStationStatus === 'Inactive' && hasTicket ? ticketNumber : '',
+      comStationCondition: comStationCondition || 'Normal',
+      issueDescription: comStationCondition === 'Issue' ? issueDescription : '',
+      hasTicket: comStationCondition === 'Issue' ? (hasTicket || false) : false,
+      ticketNumber: comStationCondition === 'Issue' && hasTicket ? ticketNumber : '',
       departmentId: req.user.departmentId,
     });
 
@@ -68,7 +71,7 @@ const createComStation = async (req, res) => {
 // @access  Private
 const updateComStation = async (req, res) => {
   try {
-    const { comStationType, comStationLocation, comStationStatus, issueDescription, hasTicket, ticketNumber } = req.body;
+    const { comStationType, comStationLocation, comStationStatus, comStationCondition, issueDescription, hasTicket, ticketNumber } = req.body;
     
     const comStation = await ComStation.findById(req.params.id);
     if (!comStation) {
@@ -78,9 +81,13 @@ const updateComStation = async (req, res) => {
     comStation.comStationType = comStationType || comStation.comStationType;
     comStation.comStationLocation = comStationLocation || comStation.comStationLocation;
     comStation.comStationStatus = comStationStatus || comStation.comStationStatus;
-    
-    // Clear issue-related fields if status is Active
-    if (comStationStatus === 'Active') {
+
+    if (comStationCondition !== undefined) {
+      comStation.comStationCondition = comStationCondition;
+    }
+
+    // Clear issue-related fields only when Condition is Normal
+    if (comStation.comStationCondition === 'Normal') {
       comStation.issueDescription = '';
       comStation.hasTicket = false;
       comStation.ticketNumber = '';

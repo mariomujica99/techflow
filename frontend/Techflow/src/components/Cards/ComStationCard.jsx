@@ -30,6 +30,7 @@ const ComStationCard = ({
     comStationType: comStationInfo?.comStationType || 'EEG Cart',
     comStationLocation: comStationInfo?.comStationLocation || 'Inpatient',
     comStationStatus: comStationInfo?.comStationStatus || 'Active',
+    comStationCondition: comStationInfo?.comStationCondition || 'Normal',
     issueDescription: comStationInfo?.issueDescription || '',
     hasTicket: comStationInfo?.hasTicket || false,
     ticketNumber: comStationInfo?.ticketNumber || ''
@@ -62,6 +63,18 @@ const ComStationCard = ({
     }));
   };
 
+  // Handle condition toggle
+  const handleConditionToggle = () => {
+    const newCondition = formData.comStationCondition === 'Normal' ? 'Issue' : 'Normal';
+    setFormData(prev => ({
+      ...prev,
+      comStationCondition: newCondition,
+      issueDescription: newCondition === 'Normal' ? '' : prev.issueDescription,
+      hasTicket: newCondition === 'Normal' ? false : prev.hasTicket,
+      ticketNumber: newCondition === 'Normal' ? '' : prev.ticketNumber,
+    }));
+  };
+
   // Handle ticket toggle
   const handleTicketToggle = () => {
     setFormData(prev => ({
@@ -90,6 +103,7 @@ const ComStationCard = ({
           comStationType: 'EEG Cart',
           comStationLocation: 'Inpatient',
           comStationStatus: 'Active',
+          comStationCondition: 'Normal',
           issueDescription: '',
           hasTicket: false,
           ticketNumber: ''
@@ -101,6 +115,7 @@ const ComStationCard = ({
             comStationType: formData.comStationType,
             comStationLocation: formData.comStationLocation,
             comStationStatus: formData.comStationStatus,
+            comStationCondition: formData.comStationCondition,
             issueDescription: formData.issueDescription,
             hasTicket: formData.hasTicket,
             ticketNumber: formData.ticketNumber
@@ -130,8 +145,17 @@ const ComStationCard = ({
   };
 
   // Get status indicator color
-  const getStatusColor = (status) => {
-    return status === 'Active' ? 'bg-green-500' : 'bg-red-500';
+  const getStatusColor = (status, condition) => {
+    if (status === 'Inactive') return 'bg-red-500';
+    if (condition === 'Issue') return 'bg-amber-400';
+    return 'bg-green-500';
+  };
+
+  // Get Condition button styles
+  const getConditionStyles = (condition) => {
+    return condition === 'Normal'
+      ? 'bg-green-50 text-green-700 border border-green-200'
+      : 'bg-amber-50 text-amber-700 border border-amber-200';
   };
 
   // Click-outside dropdown handlers
@@ -229,12 +253,23 @@ const ComStationCard = ({
                     : 'bg-red-50 text-red-700 border border-red-200'
                 }`}
               >
-                <div className={`w-2 h-2 rounded-full ${getStatusColor(formData.comStationStatus)}`}></div>
+                <div className={`w-2 h-2 rounded-full ${getStatusColor(formData.comStationStatus, formData.comStationCondition)}`}></div>
                 {formData.comStationStatus}
               </button>
             </div>
 
-            {formData.comStationStatus === 'Inactive' && (
+            <div>
+              <label className="text-xs text-gray-500 block mb-1">Condition</label>
+              <button
+                onClick={handleConditionToggle}
+                className={`w-full text-sm font-medium px-3 py-2 rounded-md flex items-center justify-center gap-2 cursor-pointer transition-colors ${getConditionStyles(formData.comStationCondition)}`}
+              >
+                <div className={`w-2 h-2 rounded-full ${formData.comStationCondition === 'Normal' ? 'bg-green-500' : 'bg-amber-400'}`}></div>
+                {formData.comStationCondition}
+              </button>
+            </div>
+
+            {formData.comStationCondition === 'Issue' && (
               <>
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Issue</label>
@@ -295,7 +330,7 @@ const ComStationCard = ({
         <div className="flex items-center gap-3 min-w-0">
           <div className="relative">
             <FaComputer className="text-gray-700 text-xl" />
-            <div className={`absolute -top-1 -right-1 w-3 h-3 ${getStatusColor(comStationInfo?.comStationStatus)} rounded-full border-2 border-white`}></div>
+            <div className={`absolute -top-1 -right-1 w-3 h-3 ${getStatusColor(comStationInfo?.comStationStatus, comStationInfo?.comStationCondition)} rounded-full border-2 border-white`}></div>
           </div>
           <div>
             <p className="text-sm font-medium">{comStationInfo?.comStation}</p>
@@ -305,7 +340,7 @@ const ComStationCard = ({
 
         {isEditMode && userRole === 'admin' && (
           <button
-            className="flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded-full px-2 py-2 border border-rose-100 hover:border-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-1.5 text-[13px] font-medium text-rose-500 bg-rose-50 rounded-full p-1.5 border border-rose-100 hover:border-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             onClick={() => setOpenDeleteAlert(true)}
             disabled={isDemoAccount}
           >
@@ -388,13 +423,26 @@ const ComStationCard = ({
                   : 'bg-red-50 text-red-700 border border-red-200'
               }`}
             >
-              <div className={`w-2 h-2 rounded-full ${getStatusColor(formData.comStationStatus)}`}></div>
+              <div className={`w-2 h-2 rounded-full ${getStatusColor(formData.comStationStatus, formData.comStationCondition)}`}></div>
               {formData.comStationStatus}
             </button>
           </div>
         )}
 
-        {(comStationInfo?.comStationStatus === 'Inactive' || formData.comStationStatus === 'Inactive') && (
+        {isEditMode && (
+          <div>
+            <label className="text-xs text-gray-500 block mb-1">Condition</label>
+            <button
+              onClick={handleConditionToggle}
+              className={`w-full text-sm font-medium px-3 py-2 rounded-md flex items-center justify-center gap-2 cursor-pointer transition-colors ${getConditionStyles(formData.comStationCondition)}`}
+            >
+              <div className={`w-2 h-2 rounded-full ${formData.comStationCondition === 'Normal' ? 'bg-green-500' : 'bg-amber-400'}`}></div>
+              {formData.comStationCondition}
+            </button>
+          </div>
+        )}
+
+        {(comStationInfo?.comStationCondition === 'Issue' || formData.comStationCondition === 'Issue') && (
           <>
             <div>
               <label className="text-xs text-gray-500 block mb-1">Issue</label>

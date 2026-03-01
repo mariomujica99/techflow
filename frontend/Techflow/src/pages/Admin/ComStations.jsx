@@ -92,6 +92,8 @@ const ComStations = () => {
     switch (selectedFilter) {
       case "All Inactive Stations":
         return `All Inactive`;   
+      case "All Stations With Issues":
+        return `Stations With Issues`;        
       case "EMU Station":
         return `EMU Stations`;
       case "EEG Cart - All":

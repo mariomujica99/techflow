@@ -114,6 +114,7 @@ export const SIDE_MENU_USER_DATA = [
 export const COM_STATIONS_DROPDOWN_OPTIONS = [
   { label: "All Computer Stations", value: "All Computer Stations" },
   { label: "All Inactive Stations", value: "All Inactive Stations" },
+  { label: "All Stations With Issues", value: "All Stations With Issues" },
   { label: "EMU Stations", value: "EMU Station" },
   { label: "Carts (All)", value: "EEG Cart - All" },
   { label: "Carts (Inpatient)", value: "EEG Cart - Inpatient" },

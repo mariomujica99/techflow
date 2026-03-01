@@ -6,6 +6,7 @@ const comStationSchema = new mongoose.Schema(
     comStationType: { type: String, enum: ['EMU Station', 'EEG Cart'], required: true },
     comStationLocation: { type: String, enum: ['Inpatient', 'Outpatient', 'Bellevue'], required: true },
     comStationStatus: { type: String, enum: ['Active', 'Inactive'], default: 'Active' },
+    comStationCondition: { type: String, enum: ['Normal', 'Issue'], default: 'Normal' },
     issueDescription: { type: String, default: '' },
     hasTicket: { type: Boolean, default: false },
     ticketNumber: { type: String, default: '' },

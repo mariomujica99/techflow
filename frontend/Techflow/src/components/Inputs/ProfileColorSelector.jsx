@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { LuPalette } from "react-icons/lu";
 
 const ProfileColorSelector = ({ selectedColor, setSelectedColor, onColorSelect }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
 
   const colors = [
-    '#30b5b2', // Primary
-    '#8D51FF', // Purple
-    '#FF6B6B', // Red
-    '#4ECDC4', // Teal
-    '#45B7D1', // Blue
-    '#96CEB4', // Green
-    '#FECA57', // Yellow
     '#FF9FF3', // Pink
-    '#54A0FF', // Light Blue
-    '#5F27CD', // Dark Purple
-    '#00D2D3', // Cyan
+    '#FF6B6B', // Red
+    '#FECA57', // Yellow
     '#FF9F43', // Orange
+    '#30b5b2', // Primary Teal
+    '#27AE60', // Green
+    '#54A0FF', // Blue
+    '#226dc8', // Dark Blue
+    '#8D51FF', // Purple
+    '#5F27CD', // Dark Purple
+    '#8E8E93', // Gray
+    '#454545', // Black
   ];
 
   const handleColorSelect = (color) => {
@@ -27,9 +27,25 @@ const ProfileColorSelector = ({ selectedColor, setSelectedColor, onColorSelect }
     }
   };
 
+  const pickerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (pickerRef.current && !pickerRef.current.contains(event.target)) {
+        setShowColorPicker(false);
+      }
+    };
+
+    if (showColorPicker) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showColorPicker]);
+
   return (
     <div className="flex flex-col items-center">
-      <div className="relative">
+      <div className="relative" ref={pickerRef}>
         {/* Color Circle */}
         <div
           className="w-20 h-20 rounded-full border-4 border-white shadow-md cursor-pointer relative"

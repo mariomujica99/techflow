@@ -20,6 +20,7 @@ import { LiaBirthdayCakeSolid } from "react-icons/lia";
 import { GiBalloons } from "react-icons/gi";
 import { BsEmojiSmile } from "react-icons/bs";
 import { IoStarSharp } from "react-icons/io5";
+import AvatarTooltip from "../../components/AvatarTooltip";
 
 const Whiteboard = () => {
   const { user } = useContext(UserContext);
@@ -220,22 +221,24 @@ const Whiteboard = () => {
     return (
       <div className="flex items-center gap-1 flex-wrap justify-end">
         {sortedUsers.map((userData, index) => (
-          <div key={userData._id || index} className="flex items-center">
-            {userData.profileImageUrl ? (
-              <img
-                src={userData.profileImageUrl}
-                alt={userData.name}
-                className="w-8 h-8 rounded-full object-cover"
-              />
-            ) : (
-              <div
-                className="w-8 h-8 flex items-center justify-center rounded-full text-white text-xs font-medium"
-                style={{ backgroundColor: userData.profileColor || "#30b5b2" }}
-              >
-                {getInitials(userData.name)}
-              </div>
-            )}
-          </div>
+          <AvatarTooltip key={userData._id || index} name={userData.name}>
+            <div className="flex items-center">
+              {userData.profileImageUrl ? (
+                <img
+                  src={userData.profileImageUrl}
+                  alt={userData.name}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-white text-xs font-medium"
+                  style={{ backgroundColor: userData.profileColor || "#30b5b2" }}
+                >
+                  {getInitials(userData.name)}
+                </div>
+              )}
+            </div>
+          </AvatarTooltip>
         ))}
       </div>
     );
@@ -254,15 +257,11 @@ const Whiteboard = () => {
 
     if (routineAM && routinePM) {
       return (
-        <div className="flex flex-col items-end gap-1">
-          <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-xs">AM</span>
-            {renderProviderDisplay(routineAM)}
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-gray-400 text-xs">PM</span>
-            {renderProviderDisplay(routinePM)}
-          </div>
+        <div className="grid gap-x-2 gap-y-1" style={{ gridTemplateColumns: 'auto 1fr' }}>
+          <span className="text-gray-400 text-xs self-center">AM |</span>
+          <div className="flex justify-end">{renderProviderDisplay(routineAM)}</div>
+          <span className="text-gray-400 text-xs self-center">PM |</span>
+          <div className="flex justify-end">{renderProviderDisplay(routinePM)}</div>
         </div>
       );
     }
@@ -270,7 +269,7 @@ const Whiteboard = () => {
     if (routineAM) {
       return (
         <div className="flex items-center gap-2">
-          <span className="text-gray-400 text-xs">AM</span>
+          <span className="text-gray-400 text-xs">AM |</span>
           {renderProviderDisplay(routineAM)}
         </div>
       );
@@ -279,7 +278,7 @@ const Whiteboard = () => {
     if (routinePM) {
       return (
         <div className="flex items-center gap-2">
-          <span className="text-gray-400 text-xs">PM</span>
+          <span className="text-gray-400 text-xs">PM |</span>
           {renderProviderDisplay(routinePM)}
         </div>
       );
@@ -294,12 +293,14 @@ const Whiteboard = () => {
     return (
       <div className="flex items-center gap-2">
         <span className="text-gray-400">Dr. {lastName}</span>
-        <div 
-          className="w-8 h-8 flex items-center justify-center rounded-full text-white text-xs font-medium"
-          style={{ backgroundColor: providerData.profileColor || "#30b5b2" }}
-        >
-          {getInitials(providerData.name)}
-        </div>
+        <AvatarTooltip name={providerData.name}>
+          <div 
+            className="w-8 h-8 flex items-center justify-center rounded-full text-white text-xs font-medium"
+            style={{ backgroundColor: providerData.profileColor || "#30b5b2" }}
+          >
+            {getInitials(providerData.name)}
+          </div>
+        </AvatarTooltip>
       </div>
     );
   };
@@ -457,8 +458,8 @@ const Whiteboard = () => {
                   </div>
                 </div>
               ) : (
-                <div className="flex justify-between items-center">
-                  <p>ROUTINE</p>
+                <div className="flex justify-between items-start">
+                  <p className="pt-1.5">ROUTINE</p>
                   {renderRoutineDisplay()}
                 </div>
               )}              

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LuTrash2, LuPlus } from "react-icons/lu";
-import { FaPhone, FaPager } from "react-icons/fa6";
+import { FaPhone, FaPager, FaBuilding } from "react-icons/fa6";
 import { MdEmail } from "react-icons/md";
 import { formatPhoneNumber, displayPhoneNumber, isPhoneNumber } from "../../utils/phoneFormatter";
 import { getInitials } from "../../utils/getInitials";
@@ -26,11 +26,22 @@ const ProviderCard = ({
     email: providerInfo?.email || '',
     phoneNumber: providerInfo?.phoneNumber || '',
     pagerNumber: providerInfo?.pagerNumber || '',
+    officeNumber: providerInfo?.officeNumber || '',
   });
 
   const colors = [
-    '#30b5b2', '#8D51FF', '#FF6B6B', '#4ECDC4', 
-    '#45B7D1', '#96CEB4', '#FECA57', '#FF9FF3'
+    '#FF9FF3', // Pink
+    '#FF6B6B', // Red
+    '#FECA57', // Yellow
+    '#FF9F43', // Orange
+    '#30b5b2', // Primary Teal
+    '#27AE60', // Green
+    '#54A0FF', // Blue
+    '#226dc8', // Dark Blue
+    '#8D51FF', // Purple
+    '#5F27CD', // Dark Purple
+    '#8E8E93', // Gray
+    '#454545', // Black
   ];
 
   const handlePhoneChange = (value) => {
@@ -47,6 +58,11 @@ const ProviderCard = ({
       // Allow text input (e.g., "Perfect Serve")
       setFormData(prev => ({ ...prev, pagerNumber: value }));
     }
+  };
+
+  const handleOfficeChange = (value) => {
+    const formatted = formatPhoneNumber(value);
+    setFormData(prev => ({ ...prev, officeNumber: formatted }));
   };
 
   const handleSubmit = async () => {
@@ -100,7 +116,7 @@ const ProviderCard = ({
         <div className="flex flex-col gap-4">
           <input
             type="text"
-            placeholder="Enter Provider Name"
+            placeholder="Provider Name"
             value={formData.name}
             onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
             className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
@@ -108,7 +124,7 @@ const ProviderCard = ({
 
           <input
             type="email"
-            placeholder="Enter Email (Optional)"
+            placeholder="Email (Optional)"
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
             className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
@@ -116,7 +132,7 @@ const ProviderCard = ({
 
           <input
             type="text"
-            placeholder="(123) 456-7890"
+            placeholder="Phone Number (Optional)"
             value={formData.phoneNumber}
             onChange={(e) => handlePhoneChange(e.target.value)}
             maxLength={14}
@@ -125,15 +141,24 @@ const ProviderCard = ({
 
           <input
             type="text"
-            placeholder="(123) 456-7890 or text"
+            placeholder="Pager (Optional)"
             value={formData.pagerNumber}
             onChange={(e) => handlePagerChange(e.target.value)}
             className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
           />
 
+          <input
+            type="text"
+            placeholder="Office Number (Optional)"
+            value={formData.officeNumber}
+            onChange={(e) => handleOfficeChange(e.target.value)}
+            maxLength={14}
+            className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
+          />
+
           <div>
             <label className="text-xs text-gray-500 block mb-2">Background Color</label>
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center">
               {colors.map((color) => (
                 <button
                   key={color}
@@ -199,6 +224,12 @@ const ProviderCard = ({
                     <span>{providerInfo.pagerNumber}</span>
                   </div>
                 )}
+                {providerInfo?.officeNumber && (
+                  <div className="flex items-center gap-1 text-xs text-gray-500 mt-1">
+                    <FaBuilding className="text-xs" />
+                    <span>{displayPhoneNumber(providerInfo.officeNumber)}</span>
+                  </div>
+                )}                
               </>
             )}
           </div>
@@ -219,7 +250,7 @@ const ProviderCard = ({
         <div className="space-y-3 mt-2">
           <input
             type="email"
-            placeholder="Enter Email (Optional)"
+            placeholder="Email (Optional)"
             value={formData.email}
             onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
             className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
@@ -227,7 +258,7 @@ const ProviderCard = ({
 
           <input
             type="text"
-            placeholder="(123) 456-7890"
+            placeholder="Phone Number (Optional)"
             value={formData.phoneNumber}
             onChange={(e) => handlePhoneChange(e.target.value)}
             maxLength={14}
@@ -236,15 +267,24 @@ const ProviderCard = ({
 
           <input
             type="text"
-            placeholder="(123) 456-7890 or text"
+            placeholder="Pager (Optional)"
             value={formData.pagerNumber}
             onChange={(e) => handlePagerChange(e.target.value)}
             className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
           />
 
+          <input
+            type="text"
+            placeholder="Office Number (Optional)"
+            value={formData.officeNumber}
+            onChange={(e) => handleOfficeChange(e.target.value)}
+            maxLength={14}
+            className="w-full text-sm text-black outline-none bg-white border border-slate-100 rounded-md px-2 py-2 placeholder:text-gray-500"
+          />
+
           <div>
             <label className="text-xs text-gray-500 block mb-2">Background Color</label>
-            <div className="flex gap-2 mb-4">
+            <div className="flex gap-2 justify-center mb-4">
               {colors.map((color) => (
                 <button
                   key={color}
