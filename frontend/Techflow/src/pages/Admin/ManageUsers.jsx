@@ -6,6 +6,7 @@ import { LuFileSpreadsheet } from "react-icons/lu";
 import UserCard from "../../components/Cards/UserCard";
 import { UserContext } from "../../context/userContext";
 import { Navigate } from "react-router-dom";
+import { isDemoAccount } from "../../utils/isDemoAccount";
 
 const ManageUsers = () => {
   const { user } = useContext(UserContext);
@@ -69,6 +70,14 @@ const ManageUsers = () => {
   return (
     <AppLayout activeMenu="Team Members">
       <div className="mt-5 mb-10">
+        {/* Demo Alert */}
+        {isDemoAccount(user) && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-2">
+            <p className="text-sm text-amber-800">
+              <strong>Demo Account:</strong> User deletion is disabled.
+            </p>
+          </div>
+        )}
         <div className="flex flex-col md:flex-row md:justify-between mb-2 gap-3">
 
           <div>
@@ -96,8 +105,14 @@ const ManageUsers = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-          {allUsers?.map((user) => (
-            <UserCard key={user._id} userInfo={user} onUserDeleted={handleUserDeleted} showAdminBadge={true} />
+          {allUsers?.map((member) => (
+            <UserCard 
+              key={member._id} 
+              userInfo={member} 
+              onUserDeleted={handleUserDeleted} 
+              showAdminBadge={true}
+              isDemoAccount={isDemoAccount(user)}
+            />
           ))}
         </div>
       </div>

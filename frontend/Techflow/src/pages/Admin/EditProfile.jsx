@@ -13,6 +13,7 @@ import ProfileColorSelector from "../../components/Inputs/ProfileColorSelector";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { formatPhoneNumber, displayPhoneNumber } from '../../utils/phoneFormatter';
+import { isDemoAccount } from "../../utils/isDemoAccount";
 
 const EditProfile = () => {
   const { user, updateUser, clearUser } = useContext(UserContext);
@@ -29,6 +30,7 @@ const EditProfile = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
+  const isDemo = isDemoAccount(user);
 
   useEffect(() => {
     if (user) {
@@ -151,6 +153,14 @@ const EditProfile = () => {
   return (
     <AppLayout activeMenu="Edit Profile">
       <div className="mt-5 mb-10">
+        {/* Demo Alert */}
+        {isDemo && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-2">
+            <p className="text-sm text-amber-800">
+              <strong>Demo Account:</strong> Profile editing is disabled.
+            </p>
+          </div>
+        )}
         <div className="form-card mt-4">
           <div className="flex items-center gap-3">
             <h2 className="text-xl md:text-xl text-gray-600 font-bold mb-2">Edit Profile</h2>
@@ -245,6 +255,7 @@ const EditProfile = () => {
                 type="button"
                 className="w-full text-sm font-medium text-white bg-rose-400 shadow-lg shadow-rose-300/20 p-[10px] rounded-md hover:bg-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setOpenDeleteAlert(true)}
+                disabled={isDemo}
               >
                 DELETE ACCOUNT
               </button>
@@ -252,6 +263,7 @@ const EditProfile = () => {
               <button 
                 type="submit" 
                 className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={loading || isDemo}
               >
                 {loading ? 'UPDATING PROFILE' : 'UPDATE PROFILE'}
               </button>

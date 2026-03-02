@@ -8,6 +8,7 @@ import { UserContext } from "../../context/userContext";
 import toast from "react-hot-toast";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { LiaEdit } from "react-icons/lia";
+import { isDemoAccount } from "../../utils/isDemoAccount";
 
 const Providers = () => {
   const { user } = useContext(UserContext);
@@ -71,6 +72,14 @@ const Providers = () => {
   return (
     <AppLayout activeMenu="Reading Providers">
       <div className="mt-5 mb-10">
+        {/* Demo Alert */}
+        {isDemoAccount(user) && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-2">
+            <p className="text-sm text-amber-800">
+              <strong>Demo Account:</strong> Provider deletion is disabled.
+            </p>
+          </div>
+        )}
         <div className="flex flex-col md:flex-row md:justify-between mb-2 gap-3">
           <div>
             <div className="flex items-center gap-3 mt-1">
@@ -118,6 +127,7 @@ const Providers = () => {
               isEditMode={isEditMode}
               onProviderDeleted={handleProviderDeleted}
               onProviderUpdated={handleProviderUpdated}
+              isDemoAccount={isDemoAccount(user)}
             />
           ))}
           
@@ -125,6 +135,7 @@ const Providers = () => {
             <ProviderCard 
               isAddCard={true}
               onProviderCreated={handleProviderCreated}
+              isDemoAccount={isDemoAccount(user)}
             />
           )}
         </div>

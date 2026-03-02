@@ -9,6 +9,7 @@ import { UserContext } from "../../context/userContext";
 import toast from "react-hot-toast";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { LiaEdit } from "react-icons/lia";
+import { isDemoAccount } from "../../utils/isDemoAccount";
 
 const ComStations = () => {
   const { user } = useContext(UserContext);
@@ -136,6 +137,14 @@ const ComStations = () => {
   return (
     <AppLayout activeMenu="Computer Stations">
       <div className="mt-5 mb-10">
+        {/* Demo Alert */}
+        {isDemoAccount(user) && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-2">
+            <p className="text-sm text-amber-800">
+              <strong>Demo Account:</strong> Computer station editing and deletion is disabled.
+            </p>
+          </div>
+        )}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <h2 className="text-xl md:text-xl text-gray-500 font-bold">{getHeaderText()}</h2>
@@ -225,6 +234,7 @@ const ComStations = () => {
               onComStationDeleted={handleComStationDeleted}
               onComStationUpdated={handleComStationUpdated}
               userRole={user?.role}
+              isDemoAccount={isDemoAccount(user)}
             />
           ))}
           
@@ -233,6 +243,7 @@ const ComStations = () => {
               isAddCard={true}
               onComStationCreated={handleComStationCreated}
               userRole={user?.role}
+              isDemoAccount={isDemoAccount(user)}
             />
           )}
         </div>
