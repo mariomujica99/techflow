@@ -253,7 +253,7 @@ const EditProfile = () => {
             <div className="flex items-center gap-3 mt-6">
               <button 
                 type="button"
-                className="w-full text-sm font-medium text-white bg-rose-400 shadow-lg shadow-rose-300/20 p-[10px] rounded-md hover:bg-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full h-15 md:h-12 text-sm font-medium text-white bg-rose-400 shadow-lg shadow-rose-300/20 p-[10px] rounded-md hover:bg-rose-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 onClick={() => setOpenDeleteAlert(true)}
                 disabled={isDemo}
               >
@@ -262,10 +262,10 @@ const EditProfile = () => {
 
               <button 
                 type="submit" 
-                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary h-15 md:h-12 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading || isDemo}
               >
-                {loading ? 'UPDATING PROFILE' : 'UPDATE PROFILE'}
+                {loading ? 'UPDATING ACCOUNT' : 'UPDATE ACCOUNT'}
               </button>
             </div>
           </form>

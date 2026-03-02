@@ -25,6 +25,11 @@ const Navbar = ({ activeMenu }) => {
     };
   }, [openSideMenu]);
 
+  useEffect(() => {
+    const img = new Image();
+    img.src = '/bg-sidemenu-image.png';
+  }, []);
+
   return (
     <div
       className="flex gap-5 items-center py-4 px-7 fixed top-0 left-0 right-0 z-30"
