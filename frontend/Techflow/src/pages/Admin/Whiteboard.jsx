@@ -459,7 +459,15 @@ const Whiteboard = () => {
                 </div>
               ) : (
                 <div className="flex justify-between items-start">
-                  <p className="pt-1.5">ROUTINE</p>
+                  <p className={
+                    (whiteboardData?.readingProviders?.routine || 
+                    whiteboardData?.readingProviders?.routineAM || 
+                    whiteboardData?.readingProviders?.routinePM) 
+                      ? "pt-1.5" 
+                      : "pt-0"
+                  }>
+                    ROUTINE
+                  </p>
                   {renderRoutineDisplay()}
                 </div>
               )}              
