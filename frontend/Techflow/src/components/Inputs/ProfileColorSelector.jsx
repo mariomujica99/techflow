@@ -65,29 +65,27 @@ const ProfileColorSelector = ({ selectedColor, setSelectedColor, onColorSelect }
         >
           <LuPalette className="text-sm" />
         </button>
-      </div>
 
-      {/* Color Picker Dropdown */}
-      {showColorPicker && (
-        <div className="absolute mt-24 z-10 bg-white rounded-lg shadow-lg border border-gray-200 p-4">
-          <p className="text-xs font-medium text-gray-600 mb-3">Choose Background Color</p>
-          <div className="grid grid-cols-4 gap-2">
-            {colors.map((color) => (
-              <button
-                key={color}
-                type="button"
-                className={`w-8 h-8 rounded-full border-2 cursor-pointer hover:scale-110 transition-transform ${
-                  selectedColor === color ? 'border-gray-800' : 'border-gray-300'
-                }`}
-                style={{ backgroundColor: color }}
-                onClick={() => handleColorSelect(color)}
-              />
-            ))}
+        {/* Color Picker Dropdown */}
+        {showColorPicker && (
+          <div className="absolute left-9.75 -translate-x-1/2 mt-2 z-10 bg-white rounded-lg shadow-lg border border-gray-200 p-4 w-45">
+            <div className="grid grid-cols-4 gap-2">
+              {colors.map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  className={`w-8 h-8 rounded-full border-2 cursor-pointer hover:scale-110 transition-transform ${
+                    selectedColor === color ? 'border-gray-800' : 'border-gray-300'
+                  }`}
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleColorSelect(color)}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-
-      <p className="text-xs text-gray-500 mt-2 text-center">Background Color</p>
+        )}
+      </div>
+        <p className="text-xs text-gray-500 mt-2 text-center">Background Color</p>
     </div>
   );
 };

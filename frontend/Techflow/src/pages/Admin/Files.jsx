@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
+import FilePreviewModal from "../../components/FilePreviewModal";
 import AppLayout from "../../components/layouts/AppLayout";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -459,44 +460,13 @@ const Files = () => {
 
         {/* Preview Modal */}
         {showPreviewModal && previewFile && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
-            <div className="relative w-full h-full max-w-7xl max-h-screen p-4">
-              {/* Close Button */}
-              <button
-                onClick={() => {
-                  setShowPreviewModal(false);
-                  setPreviewFile(null);
-                }}
-                className="absolute top-6 right-6 z-10 p-2 bg-white rounded-full hover:bg-gray-100 shadow-lg cursor-pointer"
-              >
-                <LuX className="text-xl text-gray-700" />
-              </button>
-
-              {/* Preview Content */}
-              <div className="w-full h-full flex items-center justify-center">
-                {previewFile.fileType === 'image' ? (
-                  <img
-                    src={previewFile.fileUrl}
-                    alt={previewFile.name}
-                    className="max-w-full max-h-full object-contain"
-                  />
-                ) : previewFile.fileType === 'pdf' ? (
-                  <iframe
-                    src={previewFile.fileUrl}
-                    title={previewFile.name}
-                    className="w-full h-full bg-white rounded-lg"
-                  />
-                ) : null}
-              </div>
-
-              {/* File Name */}
-              <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 px-4 py-2 rounded-lg shadow-lg">
-                <p className="text-sm font-medium text-gray-700 text-center">
-                  {previewFile.name}
-                </p>
-              </div>
-            </div>
-          </div>
+          <FilePreviewModal
+            file={previewFile}
+            onClose={() => {
+              setShowPreviewModal(false);
+              setPreviewFile(null);
+            }}
+          />
         )}
 
         {/* Delete Modal */}
