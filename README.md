@@ -22,7 +22,7 @@ A Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiolog
 > Techflow intentionally excludes those features as a deliberate compliance decision. A separate repository preserves the full feature set for portfolio and demonstration purposes.
 >
 > ### Task Management Version
-> [![Techflow](https://img.shields.io/badge/Techflow-EEG_Task_Manager_Repo-30b5b2?style=for-the-badge&logo=github)](https://github.com/mariomujica99/techflow-eeg-task-manager)  
+> [![Techflow](https://img.shields.io/badge/Techflow-EEG_Task_Manager_Repo-30b5b2?style=for-the-badge&logo=github)](https://github.com/mariomujica99/eeg-task-manager)  
 > **Want to explore the full task management tools?**  
 > Techflow EEG Task Manager includes everything in this app, plus a complete **Task Management System** for EEG orders.
 
