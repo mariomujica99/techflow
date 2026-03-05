@@ -12,7 +12,6 @@ A Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiolog
 
 </div>
 
-
 ---
 
 > ### About This Repository
@@ -21,9 +20,7 @@ A Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiolog
 > A Task Management System (EEG orders, patient task checklists, procedure-level data) requires a formal HIPAA compliance review for deployment in a clinical environment.
 > 
 > Techflow intentionally excludes those features as a deliberate compliance decision. A separate repository preserves the full feature set for portfolio and demonstration purposes.
-
----
-
+>
 > ### Task Management Version
 > [![Techflow](https://img.shields.io/badge/Techflow-EEG_Task_Manager_Repo-30b5b2?style=for-the-badge&logo=github)](https://github.com/mariomujica99/techflow-eeg-task-manager)  
 > **Want to explore the full task management tools?**  
@@ -541,4 +538,4 @@ Techflow reflects both my technical skill set and my firsthand understanding of 
 
 ## Disclaimer
 
-This is a **personal portfolio project** built to demonstrate full-stack development skills. The project is for educational purposes and potential employer review. This project was created independently as a learning exercise and portfolio piece. It is not affiliated with, endorsed by, or connected to any healthcare organization and contains no real patient data. The information within the application is fictitious and created solely for demonstration purposes. Room numbers, staff members, and workflow tasks are simulated data. No real clinical data or protected health information (PHI) is used in any capacity.
+This is a **personal portfolio project** built to demonstrate full-stack development skills. The project is for educational purposes and potential employer review. This project was created independently as a learning exercise and portfolio piece. It is not affiliated with, endorsed by, or connected to any healthcare organization. The demonstration department, staff members, and providers are simulated data. No real clinical data or protected health information (PHI) is used in any capacity.
