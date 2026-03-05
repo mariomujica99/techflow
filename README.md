@@ -2,15 +2,32 @@
   <img src="https://github.com/user-attachments/assets/93b3fb76-371f-4fa4-b88c-927e28067a36" alt="Techflow Logo" width="100" height="100" />
   
 # Techflow
-### EEG Workflow Management System
+### EEG Workflow Management Portal
 
-[![Website](https://img.shields.io/badge/Website-Techflow-30b5b2?style=for-the-badge)](https://techflow-eeg.onrender.com)
-[![YouTube](https://img.shields.io/badge/Video_Demo-YouTube-red?style=for-the-badge)](https://youtu.be/jFayn1NAa2k)
+[![Website](https://img.shields.io/badge/Website-Techflow-30b5b2?style=for-the-badge)](https://techflow-portal.onrender.com)
+[![YouTube](https://img.shields.io/badge/Video_Demo-YouTube-red?style=for-the-badge)](https://www.youtube.com/watch?v=th6pe1BtIMc)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Mario_Mujica-blue?style=for-the-badge)](https://www.linkedin.com/in/mario-mujica-903b19172)
 
-> A comprehensive Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiology department. This project streamlines EEG workflow management, equipment tracking, and team collaboration.
+A Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiology department. Techflow streamlines EEG workflow management (equipment tracking, supply coordination, team collaboration) into one accessible platform.
 
 </div>
+
+
+---
+
+> ### About This Repository
+> This is the **production version** of Techflow, deployed for department use.
+>
+> A Task Management System (EEG orders, patient task checklists, procedure-level data) requires a formal HIPAA compliance review for deployment in a clinical environment.
+> 
+> Techflow intentionally excludes those features as a deliberate compliance decision. A separate repository preserves the full feature set for portfolio and demonstration purposes.
+
+---
+
+> ### Task Management Version
+> [![Techflow](https://img.shields.io/badge/Techflow-EEG_Task_Manager_Repo-30b5b2?style=for-the-badge&logo=github)](https://github.com/mariomujica99/techflow-eeg-task-manager)  
+> **Want to explore the full task management tools?**  
+> Techflow EEG Task Manager includes everything in this app, plus a complete **Task Management System** for EEG orders.
 
 ---
 
@@ -31,24 +48,23 @@
 
 ## Overview
 
-**Techflow** is a full-stack Progressive Web App designed specifically for **EEG (Electroencephalography) Technologists** working in hospital neurophysiology departments. The system addresses real-world challenges in managing complex medical procedures by providing:
+**Techflow** is a full-stack Progressive Web App designed specifically for **EEG (Electroencephalography) Technologists** working in hospital neurophysiology departments. The system addresses real-world operational challenges by providing:
 
-- Digital workflow management replacing paper-based task tracking
-- Real-time team coordination through interactive whiteboards
-- Equipment monitoring for an overview of issues with inactive equipment
+- Team coordination through an interactive digital whiteboard
+- Equipment monitoring for an overview of issues with computer stations
 - Inventory tracking for medical supplies across multiple storage locations
 - Role-based access control separating admin and member responsibilities
+- Multi-department architecture allowing each department to operate independently
 
-This application was built to demonstrate my full-stack development skills including authentication, complex state management, file uploads, data visualization, and responsive design.
+This application was built to demonstrate my full-stack development skills including authentication, state management, file uploads, and responsive design.
 
 **The Problems:**
-- Manual Whiteboards: Staff must navigate through a chat to find the whiteboard picture of the day
+- Manual Whiteboard: Staff must navigate through a chat to find the whiteboard picture of the day
 - Communication Gaps: No centralized system for supply needs, leading to delays and out of stock supplies
 - Information: Important images and reference materials not centralized
-- Task Visibility: Difficult to track what's been completed versus what needs attention, especially across shifts
 - Equipment Issues: Computer station problems aren't consistently documented or tracked
 
-**Solution:** Techflow brings everything related to our department into one central, accessible location. Think of it as a digital command center for EEG operations.
+**Solution:** Techflow brings everything related to our department into one central, accessible location. It is as a digital command center for EEG operations.
 
 ---
 
@@ -60,38 +76,28 @@ This application was built to demonstrate my full-stack development skills inclu
   <tr>
     <td width="50%">
       <img src="https://github.com/user-attachments/assets/597c74bb-662d-4108-a791-310ec17b66e2" alt="Mac PWA Icon" width="100%" />
-      <p align="center"><em>Mac PWA App Icon</em></p>
+      <p align="center">Mac PWA App Icon</p>
     </td>
     <td width="50%">
-      <img src="https://github.com/user-attachments/assets/5925f097-eb64-497e-8cb1-52278e2af187" alt="Safari Favorites" width="100%" />
-      <p align="center"><em>Safari Favorites App Icon</em></p>
+      <img src="https://github.com/user-attachments/assets/6609dfb0-dd5a-41dd-81dd-2f5cbbadbfba" alt="Safari Favorites" width="100%" />
+      <p align="center">Safari Favorites App Icon</p>
     </td>
   </tr>
   <tr>
     <td width="50%">
       <img src="https://github.com/user-attachments/assets/44f2c110-e86e-4b7b-9bd4-21194ee23dbb" alt="Safari Install" width="100%" />
-      <p align="center"><em>Safari Mac PWA Install</em></p>
+      <p align="center">Safari Mac PWA Install</p>
     </td>
     <td width="50%">
       <img src="https://github.com/user-attachments/assets/651bc97d-54cb-4f7f-ad30-006acb889977" alt="Chrome Install" width="100%" />
-      <p align="center"><em>Chrome Mac PWA Install</em></p>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%">
-      <img src="https://github.com/user-attachments/assets/5780cea4-18b9-4890-b8dd-79acef326d8f" alt="Techflow PWA Mac Log In Screen" width="100%"  />
-      <p align="center"><em>Mac PWA Log In Screen</em></p>
-    </td>
-    <td width="50%">
-      <img src="https://github.com/user-attachments/assets/d6c6c49d-b4f1-4655-8b92-eb70901193f4" alt="Dashboard" width="100%" />
-      <p align="center"><em>Mac PWA Dashboard</em></p>
+      <p align="center">Chrome Mac PWA Install</p>
     </td>
   </tr>
 </table>
 
 
 ### **Video Demo**
-[![Watch Full Demo](https://img.shields.io/badge/Watch_Demo-6:00_Full_Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/jFayn1NAa2k)
+[![Watch Full Demo](https://img.shields.io/badge/Watch_Demo-4:14_Full_Walkthrough-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=th6pe1BtIMc)
 
 *Complete feature demonstration showcasing all pages and functionality on a mobile device (iPhone)*
 
@@ -99,22 +105,22 @@ This application was built to demonstrate my full-stack development skills inclu
 
 ### **Website Application**
 
-[![Open Techflow](https://img.shields.io/badge/Open_Website-Techflow-30b5b2?style=for-the-badge&logo=link&logoColor=white)](https://techflow-eeg.onrender.com)
+[![Open Techflow](https://img.shields.io/badge/Open_Website-Techflow-30b5b2?style=for-the-badge&logo=link&logoColor=white)](https://techflow-portal.onrender.com)
 
 *Production deployment with full functionality - feel free to try it for yourself*
 
 ### **Demo Accounts**
 
-**Member Account**
+**User Account**
 ```
 Email: userdemo@gmail.com
-Password: Demo2025!
+Password: Demo2026!
 ```
 
 **Admin Account**
 ```
 Email: admindemo@gmail.com
-Password: Demo2025!
+Password: Demo2026!
 ```
 
 ### **Demo Account Restrictions**
@@ -127,11 +133,10 @@ For the best experience for all users, demo accounts have **limited access**:
 - Deleting users, providers, computer stations, or files
 
 **Full Access:**
-- Create and manage tasks
-- Update whiteboards
+- Update the whiteboard
 - Manage supplies
 - View all pages and features
-- Download Excel reports
+- Download Excel reports (Admin)
 
 These restrictions preserve demo data integrity so everyone can explore the full application without encountering deleted or modified content.
 
@@ -141,90 +146,30 @@ These restrictions preserve demo data integrity so everyone can explore the full
 
 ## Key Features
 
-### **Authentication & Authorization**
-- Secure JWT-based authentication with 14-day token expiration
-- Role-based access control (Admin/Member)
-- Department and Admin invite token system for controlled registration
-- Password hashing using bcrypt with salt rounds
-- Profile customization with image uploads or color avatars
-- Account management with secure deletion
+### **Whiteboard**
+- **Coverage Assignments:**
+  - **On-Call** - After-hours on-call coverage
+  - **Surg-Call** - Surgical on-call coverage
+  - **Scanning** - Scan EEG studies
+  - **Surgicals** - Surgical EEG hook-up
+  - **WADA** - WADA test procedure
 
-### **Task Management System**
-- **12 EEG Order Types** with specialized workflows:
-  - Routine EEG (Inpatient, Outpatient, BMC, Pediatric, Neonate, WADA)
-  - Continuous EEG (LTM, EMU, Pediatric, Neonate)
-  - Continuous SEEG (Depth Electrodes)
-  - Neuropsychiatric EEG
-- **Dynamic Todo Checklists** - Automatically generated based on order type
-- **Progress Tracking** - Visual progress bars with percentage completion
-- **Priority Levels** - Routine, ASAP, STAT with color coding
-- **Status Workflow** - Pending → In Progress → Completed/Disconnected
-- **Multi-user Assignment** - Assign tasks to multiple team members
-- **Comments & Annotations** - Add contextual notes to any task
-- **Timestamp Tracking** - Every checklist item includes creation timestamp
-- **Room-based Organization** - Tasks sorted by room numbers
-- **Bulk Operations** - Delete multiple completed/disconnected tasks at once
-- **Warning System** - Automatic alerts when task counts exceed thresholds (15+ disconnected, 25+ completed)
+- **Outpatient Scheduling (6 Time Slots):**
+  - **NP 8am** - Neuropsychiatric EEG slot
+  - **OP 8am-1, 8am-2, 10am, 12pm, 2pm** - Outpatient slots
+  - Only two 8am slots can be selected for the day (8am 1|2|NP).
 
-### **Whiteboard System**
-- **Lab Whiteboard:**
-  - **Coverage Assignments:**
-    - **On-Call** - After-hours on-call coverage
-    - **Surg-Call** - Surgical on-call coverage
-    - **Scanning** - Scan EEG studies
-    - **Surgicals** - Surgical EEG hook-up
-    - **WADA** - WADA test procedure
-  
-  - **Outpatient Scheduling (6 Time Slots):**
-    - **NP 8am** - Neuropsychiatric EEG appointments
-      - Automatic task creation when users assigned to this slot
-      - Creates pre-configured NP task with 75% completion (Hook-up, Transfer, Place Charge & Chart completed)
-      - Only "Disconnect" remains unchecked for completion
-    - **OP 8am-1, 8am-2, 10am, 12pm, 2pm** - Outpatient slots
-    - Only two 8am slots can be selected for the day (8am 1|2|NP).
-  
-  - **Reading Provider Assignments:**
-    - **EMU** - Epilepsy Monitoring Unit reading provider
-    - **LTM** - Long-term monitoring reading provider
-    - **Routine** - Routine EEG reading provider
-  
-  - **Automation Features:**
-    - **Date Display** - Always shows current date for reference
-    - **Last Updated Tracking** - Displays who made changes and precise timestamp
-    - **Comments Section** - Add important notes or special instructions for the day
-  
-  - **Workflow Benefits:**
-    - Single source of truth for daily coverage
-    - Can be accessed anywhere
-    - Supports shift handoffs
-  
-- **Floor Whiteboard:**
-  - **Orders**
-    - Displays today's active orders
-    - Includes incomplete orders from previous days (Pending/In Progress status)
-    - Automatically hides completed and disconnected orders from past days
-    - Eliminates need to navigate between multiple screens
-    - Orders display quick-view details
-      - Real-time status badges (Pending, In Progress, Completed, Disconnected)
-      - Priority indicators (Routine, ASAP, STAT) with color coding
+- **Reading Provider Assignments:**
+  - **EMU** - Epilepsy Monitoring Unit reading provider
+  - **LTM** - Long-term monitoring reading provider
+  - **Routine** - Routine EEG reading provider
+    - All Day Reader or AM Reader and PM Reader
 
-  - **Multi-Section Task Management Per Room:**
-    - **Skin Check** - Daily monitoring of skin integrity (Day 1, Day 2, Day 3, etc.)
-    - **Electrode Fixes** - Repair or replace problematic electrodes
-    - **Hyperventilation (HV)** - Breathing activation procedure
-    - **Photic Stimulation** - Flashing light test
-    - **Disconnect (DC's)** - End-of-study electrode removal and cleanup
-    - **Rehooks** - Reconnect patient (multiple electrodes off)
-    - **Patient Transfers** - Move patient between rooms (automatic room number update)
-    - **Troubleshoots** - Address technical issues with equipment or recording quality
-
-### **Computer Station Monitoring**
-- Equipment types: EMU Stations & EEG Carts
-- Location tracking: Inpatient, Outpatient, BMC
-- Active/Inactive status management
-- Issue description with IT ticket integration
-- Filtering system (All, Inactive, by Type, by Location)
-- Real-time equipment availability dashboard
+- **Extra:**
+  - **Comments Section** - Add important notes or special instructions for the day
+  - **Birthdays & Anniversaries** - Celebrate team milestones on the whiteboard
+  - **Date Display** - Always shows current date for reference
+  - **Last Updated Tracking** - Displays who made changes and precise timestamp
 
 ### **Supplies Management**
 - **5 Storage Locations:**
@@ -237,35 +182,58 @@ These restrictions preserve demo data integrity so everyone can explore the full
 - Custom supply item creation
 - One-click "Check All" to clear supply lists
 - Last updated by tracking with timestamps
-- Excel export for procurement
+- Excel export for procurement (Admin Only)
 
-### **Reading Provider Management**
-- Provider profile creation with color-coded avatars
-- Contact information (Phone, Pager, Email)
-- Assignment to whiteboard sections
+### **Computer Station Monitoring**
+- Equipment types: EMU Stations & EEG Carts
+- Location tracking: Inpatient, Outpatient, BMC
+- Active/Inactive status management
+- Normal/Issue condition management
+- Issue description with IT ticket integration
+- Filtering system (All, Inactive, with Issue, by Type, by Location)
+- Real-time equipment availability dashboard
+- Excel export for reporting (Admin Only)
 
 ### **File Management System**
 - Hierarchical folder structure
 - Cloud storage via Cloudinary CDN
 - Supported formats: PDF, Images (JPG, PNG)
 - File upload with drag-and-drop (up to 50MB)
+- In-browser preview for PDFs and images
 - Folder size calculation (recursive)
 - Download functionality
-- Delete with cascade (removes all folder contents)
+- Folder deletion with cascade (removes all folder contents)
 
-### **Analytics & Reporting**
-- **Interactive Dashboard:**
-  - Real-time order statistics (Total, Pending, In Progress, Completed, Disconnected)
-  - Pie chart for order status distribution
-  - Bar chart for priority level analysis
-  - Recent orders table with status badges
-- **Excel Reports:**
-  - Admin-only export functionality
-  - Task details with room, order type, priority, status, dates
-  - Team member directory with contact information
-  - Reading provider contact list
-  - Computer station inventory with issue tracking
-  - Needed supplies by storage location
+### **Team Member Directory**
+- View all department members alphabetically
+- Contact information display (Email, Phone, Pager)
+- Admin view includes user deletion
+- Excel export for team directory (Admin Only)
+
+### **Reading Provider Management**
+- Provider profile creation with color-coded avatars (Admin Only)
+- Contact information (Email, Phone Number, Pager, Office Number)
+- Assignment to whiteboard reading sections
+- Excel export with provider directory (Admin Only)
+
+### Multi-Department Support
+Techflow is architected for **multi-department deployment**. Each department operates in a fully isolated environment. Data, users, whiteboards, supplies, and files are all scoped per department. No data crosses department boundaries.
+
+**How it works:**
+- Department administrators receive a unique **Department Invite Token** to share with their team
+- All users who register with that token are automatically scoped to that department
+- An optional **Admin Invite Token** grants elevated admin privileges within a department
+- Each department has its own independent whiteboard, supply lists, computer stations, file storage, and user directory
+
+This design allows multiple hospital departments to run Techflow simultaneously without any overlap in data or operations.
+
+### **Authentication & Authorization**
+- Secure JWT-based authentication with 14-day token expiration
+- Role-based access control (Admin/User)
+- Department and Admin invite token system for controlled registration
+- Password hashing using bcrypt with salt rounds
+- Profile customization with image uploads or color avatars
+- Account management with secure deletion
 
 ### **Progressive Web App (PWA)**
 - Installable on desktop and mobile devices
@@ -285,7 +253,6 @@ These restrictions preserve demo data integrity so everyone can explore the full
 | **Tailwind CSS** | Styling Framework | v4 |
 | **React Router** | Client-side Routing | 7.1.5 |
 | **Axios** | HTTP Client | 1.7.9 |
-| **Recharts** | Data Visualization | 2.15.0 |
 | **Moment.js** | Date Formatting | 2.30.1 |
 | **React Hot Toast** | Toast Notifications | 2.4.1 |
 | **React Icons** | Icon Library | 5.4.0 |
@@ -306,7 +273,7 @@ These restrictions preserve demo data integrity so everyone can explore the full
 
 ### **Development Tools**
 - **Postman** - API Testing
-- **GitHub** - Store Code
+- **GitHub** - Source Control
 - **Render** - Cloud Deployment
 - **MongoDB Atlas** - Database Hosting
 
@@ -334,6 +301,7 @@ These restrictions preserve demo data integrity so everyone can explore the full
 │  │  Express.js REST API                                │   │
 │  │  - JWT Authentication Middleware                    │   │
 │  │  - Role-based Authorization                         │   │
+│  │  - Department-scoped Data Isolation                 │   │
 │  │  - Error Handling Middleware                        │   │
 │  │  - Multer File Upload                               │   │
 │  └─────────────────────────────────────────────────────┘   │
@@ -343,8 +311,9 @@ These restrictions preserve demo data integrity so everyone can explore the full
 │                      DATABASE LAYER                        │
 │  ┌─────────────────────────────────────────────────────┐   │
 │  │  MongoDB Atlas (Cloud)                              │   │
-│  │  - Users, Tasks, Providers, ComStations             │   │
+│  │  - Users, Providers, ComStations                    │   │
 │  │  - Whiteboards, Supplies, Files                     │   │
+│  │  - Department-scoped via departmentId               │   │
 │  │  - Mongoose ODM with Schema Validation              │   │
 │  └─────────────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────────────┘
@@ -362,18 +331,16 @@ These restrictions preserve demo data integrity so everyone can explore the full
 
 ### **Database Schema Design**
 
-**7 Core Collections:**
-1. **Users** - Team members with authentication
-2. **Tasks** - EEG orders with embedded todo sub-documents
-3. **Providers** - Reading physicians
-4. **ComStations** - Equipment tracking
-5. **Supplies** - Inventory by storage room
-6. **Whiteboards** - Daily assignments with user/provider references
-7. **Files** - Document hierarchy with folder support
+**6 Core Collections:**
+1. **Users** - Team members with authentication and department scoping
+2. **Providers** - Reading physicians
+3. **ComStations** - Equipment tracking
+4. **Supplies** - Inventory by storage room
+5. **Whiteboards** - Daily assignments with user/provider references
+6. **Files** - Document hierarchy with folder support
 
 **Key Relationships:**
-- Tasks → Users (many-to-many via assignedTo array)
-- Tasks → ComStations (one-to-one reference)
+- All resources scoped to `departmentId` for data isolation
 - Whiteboards → Users (many-to-many via coverage arrays)
 - Whiteboards → Providers (one-to-one via readingProviders)
 - Files → Users (one-to-many via uploadedBy)
@@ -386,13 +353,12 @@ These restrictions preserve demo data integrity so everyone can explore the full
 ### **State Management Strategy**
 - **Context API** for global user authentication state
 - **Local State** (useState) for component-specific data
-- **Session Storage** for warning dismissal tracking
 - **Local Storage** for JWT token persistence
 
 ### **Routing Architecture**
 - **Public Routes:** Login, Sign Up
-- **Private Routes (Members):** Dashboard, Tasks, Whiteboards, View-only access
-- **Private Routes (Admins):** All member routes + Manage Tasks, Delete operations, Reports
+- **Private Routes (Members):** Whiteboard, Supplies, Computer Stations, Files, Team Members, Providers, Edit Profile
+- **Private Routes (Admins):** All member routes + Create/Delete operations, Reports
 - **Role-based redirects** on login based on user role
 
 ### **Responsive Design Approach**
@@ -418,29 +384,14 @@ DELETE /profile                   # Delete user account
 POST   /upload-profile-image      # Upload profile picture
 ```
 
-#### **Tasks** (`/api/tasks`)
-```
-GET    /                          # Get tasks (filtered by role)
-GET    /all                       # Get all tasks (everyone)
-GET    /dashboard-data            # Get dashboard analytics
-GET    /user-dashboard-data       # Get user-specific analytics
-GET    /:id                       # Get single task
-POST   /                          # Create task
-PUT    /:id                       # Update task
-PUT    /:id/status                # Update task status
-PUT    /:id/todo                  # Update todo checklist
-DELETE /:id                       # Delete task
-DELETE /bulk/:status              # Bulk delete by status
-```
-
 #### **Users** (`/api/users`)
 ```
-GET    /                          # Get all users (with task counts)
+GET    /                          # Get all users in department
 GET    /:id                       # Get user by ID
 DELETE /:id                       # Delete user (admin only)
 ```
 
-#### **Whiteboards** (`/api/lab-whiteboard`)
+#### **Whiteboards** (`/api/whiteboard`)
 ```
 GET    /                          # Get whiteboard data
 PUT    /                          # Update whiteboard
@@ -449,17 +400,17 @@ PUT    /                          # Update whiteboard
 #### **Computer Stations** (`/api/com-stations`)
 ```
 GET    /                          # Get stations (with filters)
-POST   /                          # Create station
+POST   /                          # Create station (admin only)
 PUT    /:id                       # Update station
-DELETE /:id                       # Delete station
+DELETE /:id                       # Delete station (admin only)
 ```
 
 #### **Providers** (`/api/providers`)
 ```
 GET    /                          # Get all providers
 GET    /:id                       # Get provider by ID
-POST   /                          # Create provider
-PUT    /:id                       # Update provider
+POST   /                          # Create provider (admin only)
+PUT    /:id                       # Update provider (admin only)
 DELETE /:id                       # Delete provider (admin only)
 ```
 
@@ -480,7 +431,6 @@ DELETE /:id                       # Delete file/folder (admin only)
 
 #### **Reports** (`/api/reports`)
 ```
-GET    /export/tasks              # Excel: Task details
 GET    /export/users              # Excel: Team directory
 GET    /export/providers          # Excel: Provider contacts
 GET    /export/com-stations       # Excel: Equipment inventory
@@ -493,7 +443,7 @@ GET    /export/supplies           # Excel: Needed supplies
 - **CORS Configuration:** Whitelist specific origins
 - **Input Validation:** Mongoose schema validation
 - **File Type Restrictions:** Multer fileFilter
-- **Rate Limiting:** 100 requests/hour for non-cached endpoints
+- **Department Isolation:** All queries scoped by departmentId
 - **Error Handling:** Never expose stack traces in production
 
 ---
@@ -504,7 +454,7 @@ GET    /export/supplies           # Excel: Needed supplies
 - Built complete MERN stack application
 - Designed and implemented RESTful API architecture
 - Managed complex client-server data flow
-- Integrated third-party services
+- Integrated third-party cloud services
 
 #### **React & Frontend Engineering**
 - Component composition and reusability patterns
@@ -518,7 +468,7 @@ GET    /export/supplies           # Excel: Needed supplies
 - Express.js middleware architecture
 - JWT-based authentication system
 - Role-based authorization (RBAC)
-- MongoDB schema design with relationships
+- MongoDB schema design with multi-tenant relationships
 - File upload handling with Multer
 - Excel report generation with ExcelJS
 - Error handling and validation
@@ -526,9 +476,8 @@ GET    /export/supplies           # Excel: Needed supplies
 #### **Database Design**
 - NoSQL document modeling with MongoDB
 - Mongoose ODM with schema validation
-- Embedded documents (todos in tasks)
+- Department-scoped multi-tenant data isolation
 - Population of references across collections
-- Complex query optimization
 - Data integrity with cascading deletes
 
 #### **Authentication & Security**
@@ -539,6 +488,7 @@ GET    /export/supplies           # Excel: Needed supplies
 - Secure file upload validation
 - CORS configuration
 - Environment variable management
+- Multi-department isolation via departmentId
 
 #### **UI/UX Design**
 - Responsive design with Tailwind CSS
@@ -547,7 +497,6 @@ GET    /export/supplies           # Excel: Needed supplies
 - Color-coded status indicators
 - Toast notifications for user feedback
 - Loading states and error handling
-- Accessibility considerations
 
 #### **Progressive Web App (PWA)**
 - Service Worker implementation
@@ -556,13 +505,6 @@ GET    /export/supplies           # Excel: Needed supplies
 - App icons for multiple platforms
 - Safe area insets for mobile devices
 
-#### **Data Visualization**
-- Recharts integration for analytics
-- Pie charts for status distribution
-- Bar charts for priority analysis
-- Interactive dashboard design
-- Real-time data updates
-
 #### **Cloud Services & Deployment**
 - Cloudinary CDN integration
 - MongoDB Atlas cloud database
@@ -570,23 +512,12 @@ GET    /export/supplies           # Excel: Needed supplies
 - Environment configuration for production
 - HTTPS/SSL setup
 
-#### **DevOps & Tools**
-- GitHub
-- API testing with Postman
-- Vite build
-- Production deployment workflow
-
 #### **Problem-Solving & Architecture**
 - Domain-driven design for healthcare workflow
+- Multi-tenant architecture with department-scoped data isolation
 - Code reusability and DRY principles
 - Performance optimization strategies
-
-#### **Soft Skills Demonstrated**
-- Requirements gathering (understanding EEG workflow)
-- Project planning and time management
-- Attention to detail (medical context accuracy)
-- Self-directed learning (new technologies)
-- Documentation writing
+- Compliance-aware feature scoping
 
 ---
 
