@@ -15,7 +15,7 @@ A Progressive Web App (PWA) for EEG Technologists in the hospital neurophysiolog
 ---
 
 > ### About This Repository
-> This is the **production version** of Techflow, deployed for department use.
+> This is the **production-ready version** of Techflow, developed for potential department adoption.
 >
 > A Task Management System (EEG orders, patient task checklists, procedure-level data) requires a formal HIPAA compliance review for deployment in a clinical environment.
 > 
